@@ -1,0 +1,16 @@
+{
+  "name": "servidorexpress",
+  "version": "1.0.0",
+  "description": "servidor creado con express que permita realizar peticiones de los productos cargados, filtrando por id o limitando la cantidad de productos.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Matias Goffi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

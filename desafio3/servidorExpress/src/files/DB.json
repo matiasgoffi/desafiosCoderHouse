@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Nike AIR MAX",
+    "description": "zapatillas urbanas.",
+    "price": 20000,
+    "code": "3031",
+    "thumbnail": "https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG",
+    "stock": 100,
+    "id": 1
+  },
+  {
+    "title": "Nike JORDAN",
+    "description": "zapatillas basquet.",
+    "price": 25000,
+    "code": "3032",
+    "thumbnail": "https://essential.vtexassets.com/arquivos/ids/655727-1200-auto?v=638040447400100000&width=1200&height=auto&aspect=true",
+    "stock": 50,
+    "id": 2
+  },
+  {
+    "title": "Nike FORCE",
+    "description": "zapatillas urbanas.",
+    "price": 20000,
+    "code": "3033",
+    "thumbnail": "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw01b9ffdd/products/NI_DH7453-001/NI_DH7453-001-1.JPG",
+    "stock": 100,
+    "id": 3
+  },
+  {
+    "title": "Nike RUNNING",
+    "description": "zapatillas para correr.",
+    "price": 15000,
+    "code": "3034",
+    "thumbnail": "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw7e10ebb9/products/NI_CW7358-002/NI_CW7358-002-1.JPG",
+    "stock": 150,
+    "id": 4
+  },
+  {
+    "title": "Nike BOTINES",
+    "description": "botines de fútbol.",
+    "price": 5000,
+    "code": "3035",
+    "thumbnail": "https://www.digitalsport.com.ar/files/products/64198d2aa902d-569897-500x500.jpg",
+    "stock": 50,
+    "id": 5
+  },
+  {
+    "title": "Adidas GRAND COURT",
+    "description": "zapatillas urbanas.",
+    "price": 20000,
+    "code": "3036",
+    "thumbnail": "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw7c2aa55d/products/AD_F36392/AD_F36392_1.JPG",
+    "stock": 100,
+    "id": 6
+  },
+  {
+    "title": "Adidas FORUM",
+    "description": "zapatillas urbanas.",
+    "price": 25000,
+    "code": "3037",
+    "thumbnail": "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw0fa1e62a/products/AD_FY7756/AD_FY7756-1.JPG",
+    "stock": 50,
+    "id": 7
+  },
+  {
+    "title": "Adidas BREAKNET",
+    "description": "zapatillas urbanas.",
+    "price": 20000,
+    "code": "3038",
+    "thumbnail": "https://sporting.vtexassets.com/arquivos/ids/277805-1200-1200?v=637559270845700000&width=1200&height=1200&aspect=true",
+    "stock": 100,
+    "id": 8
+  },
+  {
+    "title": "Adidas RUNNING",
+    "description": "zapatillas para correr.",
+    "price": 15000,
+    "code": "3039",
+    "thumbnail": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/63c77c04dc6448548ccbae880189e107_9366/Zapatillas_Galaxy_6_Negro_GW3848_01_standard.jpg",
+    "stock": 150,
+    "id": 9
+  },
+  {
+    "title": "Adidas BOTINES",
+    "description": "botines de fútbol.",
+    "price": 5000,
+    "code": "3040",
+    "thumbnail": "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6edaff52/products/ADHP3060/ADHP3060-1.JPG",
+    "stock": 50,
+    "id": 10
+  }
+]
