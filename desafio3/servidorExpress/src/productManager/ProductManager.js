@@ -122,8 +122,8 @@ export default class ProductManager {
         return productos; // Devolver todos los productos
       }
     } else {
-      return [];
-    }
+      return []; 
+    } 
   };
   //metodo eliminar producto
   deleteProduct = async (
