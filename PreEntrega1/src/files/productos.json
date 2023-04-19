@@ -1,3 +1,132 @@
 [
-
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3031",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 4
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3031",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 5
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3031",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 6
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3031",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 7
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3031",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 9
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3033",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 10
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3033",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 12
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3033",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 13
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3033",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 14
+	},
+	{
+		"title": "Nike AIR MAX",
+		"description": "zapatillas urbanas.",
+		"price": 20000,
+		"code": "3033",
+		"status": true,
+		"thumbnails": [
+			"https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw2972c9f2/products/NI_CW4555-109/NI_CW4555-109-1.JPG"
+		],
+		"stock": 100,
+		"category": "zapatillas",
+		"id": 15
+	}
 ]

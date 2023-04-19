@@ -44,7 +44,7 @@ export default class ProductManager {
 
   //este metodo genera el write
   writeProductFile = async (productos) => {
-    try {
+     try {
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(productos, null, "\t")

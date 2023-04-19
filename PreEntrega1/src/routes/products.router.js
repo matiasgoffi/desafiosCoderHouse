@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductManager from "../productManager/ProductManager.js";
+import { io } from "../app.js";
 
 const router = Router();
 
@@ -112,6 +113,9 @@ router.post("/", async (req, res) => {
       stock,
       category
     );
+
+    // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
+    io.emit("update", producto);
 
     res.status(200).json({ message: `Producto  agregado correctamente` });
   }
@@ -227,6 +231,7 @@ router.delete("/:pid", async (req, res) => {
       .json({ error: `El producto con id ${pid} no existe` });
   } else {
     await productManager.deleteProduct(pid);
+    io.emit("delete", pid);
     res
       .status(200)
       .json({ message: `Producto con id ${pid} eliminado correctamente` });
