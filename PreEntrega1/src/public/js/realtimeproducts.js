@@ -9,15 +9,7 @@ socket.on("update", (productos) => {
 
   Productos.forEach((producto) => {
     const productoHTML = `
-      <div>
-        <p>${producto.title}</p>
-        <p>${producto.description}</p>
-        <p>${producto.price}</p>
-        <p>${producto.code}</p>
-        <p>${producto.status}</p>
-        <p>${producto.stock}</p>
-        <p>${producto.category}</p>
-      </div>
+        <li>${producto.title}</li>
     `;
     listaProductos.innerHTML += productoHTML;
   });
@@ -30,15 +22,7 @@ socket.on("update", (productos) => {
       listaProductos.innerHTML = "";
       Productos.forEach((producto) => {
         const productoHTML = `
-          <div>
-            <p>${producto.title}</p>
-            <p>${producto.description}</p>
-            <p>${producto.price}</p>
-            <p>${producto.code}</p>
-            <p>${producto.status}</p>
-            <p>${producto.stock}</p>
-            <p>${producto.category}</p>
-          </div>
+            <li>${producto.title}</li>
         `;
         listaProductos.innerHTML += productoHTML;
       });

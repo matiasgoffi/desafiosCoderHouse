@@ -1,9 +1,7 @@
 fetch("/api/products")
   .then((response) => response.json())
   .then((data) => {
-    // Aquí ya tienes acceso a los datos del archivo JSON
-    console.log(data); // o puedes hacer cualquier otra cosa que necesites con los datos
-    // Luego, puedes pasar los datos como argumento a la función que desees
+    console.log(data);
     const listaProductos = document.getElementById("lista-productos");
     const ulProductos = document.createElement("ul");
     // Recorrer el array de productos y crear un <li> para cada uno

@@ -3,7 +3,7 @@ import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
 import viewRouter from "./routes/views.router.js";
-import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este cas usersRouter y petsRouter
+import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
 
 const PORT = 8080;
@@ -32,11 +32,11 @@ io.on("connection", (socket) => {
   console.log("socket connected");
 
   socket.on("update", (productos) => {
-    // Aquí puedes realizar las operaciones necesarias con los productos recibidos en el evento "update"
-    // Luego, emites el evento "update" con los datos actualizados para que se actualice la lista en el cliente
+    // operaciones necesarias para evento "update"
+    //emito el evento "update"
     io.emit("update", productos);
   });
-  // Agrega el evento "delete"
+  // evento "delete"
   socket.on("delete", (pid) => {
     io.emit("delete", pid);
   });
