@@ -5,8 +5,10 @@ import { Server } from "socket.io";
 import viewRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
+import mongoose from "mongoose";//importo Mongoose para conectar la aplicacion a la base de datos como servicio.
 
 const PORT = 8080;
+const MONGO = 'mongodb+srv://matiasgoffi:rugido33@cluster0.e9a5uqp.mongodb.net/?retryWrites=true&w=majority'
 const app = express(); //middleware a nivel de aplicacion
 
 app.use(express.json()); //middleware a nivel de aplicacion
@@ -41,3 +43,15 @@ io.on("connection", (socket) => {
     io.emit("delete", pid);
   });
 });
+
+//conectando al servidor de Mongo Atlas
+
+/* mongoose.connect('mongodb+srv://matiasgoffi:<rugido33>@cluster0.e9a5uqp.mongodb.net/?retryWrites=true&w=majority)', (error) =>{
+  if(error){
+    console.log('Cannot connect to database: '+error)
+    process.exit()
+  }
+
+})
+ */
+const conection = mongoose.connect(MONGO);

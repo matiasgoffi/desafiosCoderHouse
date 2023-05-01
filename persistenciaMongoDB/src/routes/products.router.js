@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { productsModel } from "../models/productos.model.js"; //import el modelo ahora puedo acceder a el.
 import ProductManager from "../productManager/ProductManager.js";
 import { io } from "../app.js";
 
@@ -7,8 +8,21 @@ const router = Router();
 const path = "./files/productos.json";
 const productManager = new ProductManager(path);
 
-//ruta GET products
+//ruta GET products with mongoose
 router.get("/", async (req, res) => {
+      
+      try {
+        let products = await productsModel.find()
+        res.send({result: 'success', payload:products})
+        
+      } catch (error) {
+        console.log('cannot get products with mongoose: '+error)
+      }
+});
+  
+
+
+/* router.get("/", async (req, res) => {
   const limit = req.query.limit; // obtener el valor del parámetro limit de la consulta
   let productos;
   if (limit) {
@@ -17,7 +31,7 @@ router.get("/", async (req, res) => {
     productos = await productManager.getProducts();
   }
   res.status(200).json(productos);
-});
+}); */
 
 //ruta GET products by id
 router.get("/:pid", async (req, res) => {
