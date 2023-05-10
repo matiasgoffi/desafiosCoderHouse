@@ -1,0 +1,22 @@
+<h1>Entrega CoderHouse</h1>
+<h2>Un chat persistiendo msjes con Mongo</h2>
+
+<h4>Conversación: </h4>
+<div
+  style="border: 1px solid black; width:fit-content; padding-right:2%; box-shadow: 3px 5px 5px black; max-height: 30vh; overflow:scroll"
+  id="chat"
+>
+  <p>ingrese su email: </p>
+  <input
+    style="margin-left: 5%"
+    type="email"
+    id="inputemail"
+    placeholder="xxxx@xxx.xxx"
+  />
+  <p>ingrese su mensaje: </p>
+  <input style="margin-left: 5%" id="textbox" />
+  <p id="log"> </p>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" src="/js/chat.js"></script>

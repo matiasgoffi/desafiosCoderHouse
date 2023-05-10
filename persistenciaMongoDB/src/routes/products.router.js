@@ -1,52 +1,52 @@
 import { Router } from "express";
-import { productsModel } from "../models/productos.model.js"; //import el modelo ahora puedo acceder a el.
-import ProductManager from "../productManager/ProductManager.js";
+import ManagerAccess from "../Dao/managers/ManagerAcces.js";
+import { productsModel } from "../Dao/models/products.js"; //import el modelo ahora puedo acceder a el.
+import ProductManager from "../Dao/Managers/productManager/ProductManager.js";
 import { io } from "../app.js";
 
 const router = Router();
 
 const path = "./files/productos.json";
-const productManager = new ProductManager(path);
+const productManager = new ProductManager();
+const managerAccess = new ManagerAccess();
 
-//ruta GET products with mongoose
+// ruta GET products with mongoose
 router.get("/", async (req, res) => {
-      
-      try {
-        let products = await productsModel.find()
-        res.send({result: 'success', payload:products})
-        
-      } catch (error) {
-        console.log('cannot get products with mongoose: '+error)
-      }
+  try {
+    await managerAccess.crearRegistro('consultar todos los productos');
+    const productos = await productManager.getProducts();
+    res.send({ productos });
+  } catch (error) {
+    console.log('cannot get products with mongoose: ' + error);
+    res.status(500).send({ error: 'Error al obtener los productos' });
+  }
 });
+
   
-
-
-/* router.get("/", async (req, res) => {
-  const limit = req.query.limit; // obtener el valor del parámetro limit de la consulta
-  let productos;
-  if (limit) {
-    productos = await productManager.getProducts(parseInt(limit));
-  } else {
-    productos = await productManager.getProducts();
-  }
-  res.status(200).json(productos);
-}); */
-
-//ruta GET products by id
+// ruta GET products by id with mongoose
 router.get("/:pid", async (req, res) => {
-  const pid = req.params.pid;
+  await managerAccess.crearRegistro('consultar producto');
 
-  const producto = await productManager.getProductsById(pid);
+  const id = req.params.pid;
 
-  if (!producto) {
-    return res.send({ error: `El producto con id ${pid} no existe` });
+  try {
+    const producto = await productManager.getProductsById(id);
+    if (producto) {
+      res.send({ producto });
+    } else {
+      res.status(404).send({ error: 'No se encontró el producto' });
+    }
+  } catch (error) {
+    console.log('cannot get product with mongoose: ' + error);
+    res.status(500).send({ error: 'Error al obtener el producto' });
   }
-  res.status(200).json(producto);
 });
 
-//ruta POST products
+
+// ruta POST products with mongoose
 router.post("/", async (req, res) => {
+  await managerAccess.crearRegistro('alta de producto');
+
   const {
     title,
     description,
@@ -66,58 +66,16 @@ router.post("/", async (req, res) => {
     !price ||
     !status ||
     !stock ||
-    !category
+    !category ||
+    !thumbnails ||
+    !Array.isArray(thumbnails) ||
+    !thumbnails.every((thumbnail) => typeof thumbnail === "string")
   ) {
-    return res
-      .status(400)
-      .json({ error: "Faltan campos requeridos en la solicitud" });
+    return res.status(400).json({ error: "Solicitud inválida falta al menos una propiedad querida" });
   }
-  if (typeof title !== "string") {
-    return res
-      .status(400)
-      .json({ error: "el titulo debe ser una cadena de texto" });
-  }
-  if (typeof description !== "string") {
-    return res
-      .status(400)
-      .json({ error: "la descripcion debe ser una cadena de texto" });
-  }
-  if (typeof code !== "string") {
-    return res
-      .status(400)
-      .json({ error: "el código del producto debe ser una cadena de texto" });
-  }
-  if (typeof price !== "number") {
-    return res
-      .status(400)
-      .json({ error: "el precio del producto debe ser numerico" });
-  }
-  if (typeof status !== "boolean") {
-    return res
-      .status(400)
-      .json({ error: "el estado del producto debe ser booleano" });
-  }
-  if (typeof stock !== "number") {
-    return res
-      .status(400)
-      .json({ error: "el stock del producto debe ser numerico" });
-  }
-  if (typeof category !== "string") {
-    return res.status(400).json({
-      error: "la categoria del producto debe ser una cadena de texto",
-    });
-  }
-  if (!Array.isArray(thumbnails)) {
-    return res
-      .status(400)
-      .json({ error: "thumbnails debe ser un arreglo de strings" });
-  }
-  if (!thumbnails.every((thumbnail) => typeof thumbnail === "string")) {
-    return res
-      .status(400)
-      .json({ error: "thumbnails debe ser un arreglo de strings" });
-  } else {
-    const producto = await productManager.addProduct(
+
+  try {
+    const nuevoProducto = await productManager.addProduct(
       title,
       description,
       price,
@@ -129,16 +87,21 @@ router.post("/", async (req, res) => {
     );
 
     // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
-    io.emit("update", producto);
+    io.emit("update", nuevoProducto);
 
-    res.status(200).json({ message: `Producto  agregado correctamente` });
+    res.send({ nuevoProducto });
+  } catch (error) {
+    console.log('cannot add product with mongoose: ' + error);
+    res.status(500).send({ error: 'Error al agregar el producto' });
   }
 });
 
-//ruta PUT actualizar producto
+
+
+//ruta PUT actualizar producto with mongoose
 router.put("/:pid", async (req, res) => {
-  const pid = req.params.pid;
-  const idProducto = await productManager.getProductsById(pid);
+  await managerAccess.crearRegistro('actualiza un producto');
+  const id = req.params.pid;
   const {
     title,
     description,
@@ -147,11 +110,11 @@ router.put("/:pid", async (req, res) => {
     status,
     thumbnails,
     stock,
-    category,
+    category
   } = req.body;
 
   // Validaciones requeridas
-  if (!idProducto) {
+  if (!id) {
     return res
       .status(400)
       .json({ error: `El producto con id ${pid} no existe` });
@@ -213,9 +176,9 @@ router.put("/:pid", async (req, res) => {
     return res
       .status(400)
       .json({ error: "thumbnails debe ser un arreglo de strings" });
-  } else {
-    const id = parseInt(pid);
-    const producto = await productManager.updateProduct(
+  } 
+  try {
+    const productoActualizado = await productManager.updateProduct(
       id,
       title,
       description,
@@ -227,29 +190,36 @@ router.put("/:pid", async (req, res) => {
       category
     );
 
-    res
-      .status(200)
-      .json({ message: `Producto con id ${pid} actualizado correctamente` });
+    if (!productoActualizado) {
+      return res.status(404).json({ error: "El producto no existe" });
+    }
+
+    res.send({ productoActualizado });
+  } catch (error) {
+    console.log("Error al actualizar el producto: " + error);
+    res.status(500).send({ error: "Error al actualizar el producto" });
   }
 });
 
-//ruta DELETE product
+// ruta DELETE product with mongoose
 router.delete("/:pid", async (req, res) => {
-  const pid = parseInt(req.params.pid);
+  await managerAccess.crearRegistro('eliminar producto');
 
-  const idṔroducto = await productManager.getProductsById(pid);
+  const id = req.params.pid;
 
-  if (!idṔroducto) {
-    return res
-      .status(400)
-      .json({ error: `El producto con id ${pid} no existe` });
-  } else {
-    await productManager.deleteProduct(pid);
-    io.emit("delete", pid);
-    res
-      .status(200)
-      .json({ message: `Producto con id ${pid} eliminado correctamente` });
+  try {
+    const productoEliminado = await productManager.deleteProduct(id);
+   
+  if (!productoEliminado) {
+      return res.status(404).json({ error: "El producto no existe" });
+    }
+
+    res.send( `producto con id ${id} eliminado exitosamente` );
+  } catch (error) {
+    console.log('cannot delete product with mongoose: ' + error);
+    res.status(500).send({ error: 'Error al eliminar el producto' });
   }
 });
+
 
 export default router;

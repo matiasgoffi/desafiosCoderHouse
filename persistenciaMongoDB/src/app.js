@@ -5,10 +5,12 @@ import { Server } from "socket.io";
 import viewRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
-import mongoose from "mongoose";//importo Mongoose para conectar la aplicacion a la base de datos como servicio.
+import { messagesModel } from "./Dao/models/messages.js";
+import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion a la base de datos como servicio.
 
 const PORT = 8080;
-const MONGO = 'mongodb+srv://matiasgoffi:rugido33@cluster0.e9a5uqp.mongodb.net/?retryWrites=true&w=majority'
+const MONGO =
+  "mongodb+srv://matiasgoffi:rugido33@cluster0.e9a5uqp.mongodb.net/ecommerce"; //?retryWrites=true&w=majority
 const app = express(); //middleware a nivel de aplicacion
 
 app.use(express.json()); //middleware a nivel de aplicacion
@@ -30,6 +32,7 @@ const server = app.listen(PORT, () => {
 //chat socket.io
 export const io = new Server(server);
 
+const logs = [];
 io.on("connection", (socket) => {
   console.log("socket connected");
 
@@ -42,16 +45,31 @@ io.on("connection", (socket) => {
   socket.on("delete", (pid) => {
     io.emit("delete", pid);
   });
+  //mensaje del chat
+  socket.on("message", (data) => {
+    const newMessage = new messagesModel({
+      user: data.email,
+      message: data.message,
+    });
+
+    newMessage
+      .save()
+      .then((savedMessage) => {
+        console.log("Mensaje guardado en la base de datos:", savedMessage);
+      })
+      .catch((err) => {
+        console.error("Error al guardar el mensaje:", err);
+      });
+
+    logs.push({
+      socketid: socket.id,
+      email: data.email,
+      message: data.message,
+    });
+    io.emit("log", { logs });
+  });
 });
 
 //conectando al servidor de Mongo Atlas
 
-/* mongoose.connect('mongodb+srv://matiasgoffi:<rugido33>@cluster0.e9a5uqp.mongodb.net/?retryWrites=true&w=majority)', (error) =>{
-  if(error){
-    console.log('Cannot connect to database: '+error)
-    process.exit()
-  }
-
-})
- */
 const conection = mongoose.connect(MONGO);
