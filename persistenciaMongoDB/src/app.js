@@ -72,4 +72,14 @@ io.on("connection", (socket) => {
 
 //conectando al servidor de Mongo Atlas
 
-const conection = mongoose.connect(MONGO);
+//funcion asincronica cpara ejecutar agreggates, dentor tiene la connection con MONGO 
+const bdMongo = async () => {
+    
+    
+  const conection = mongoose.connect(MONGO);
+  //aca va la logica de los agreggate
+
+}
+bdMongo();
+
+

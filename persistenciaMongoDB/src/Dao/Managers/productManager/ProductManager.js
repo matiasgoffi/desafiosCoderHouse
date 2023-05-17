@@ -33,16 +33,34 @@ export default class ProductManager {
     }
   }
 
-  //arreglo con todos los productos.
-  async getProducts(limit) {
-    let query = productsModel.find();
+  async getProducts(category, status, sort, limit = 10, page = 1) {
+    const options = {
+      limit: limit,
+      page: page,
+      sort: sort === "desc" ? { price: -1 } : { price: 1 }, // Ordena por precio de manera ascendente o descendente
+    };
+    console.log("sort:", sort);
+    // Crea el filtro de agregación
+    const filter = {};
 
-    if (limit) {
-      query = query.limit(limit);
+    if (category) {
+      filter.category = category;
     }
 
-    const productos = await query.exec();
-    return productos;
+    if (status === "true" || status === "false") {
+      filter.status = status === "true"; // Filtra los productos según el estado
+    }
+
+    const result = await productsModel.paginate(filter, options);
+    /*   return productos; */
+    return {
+      docs: result.docs,
+      totalPages: result.totalPages,
+      hasNextPage: result.hasNextPage,
+      hasPrevPage: result.hasPrevPage,
+      nextPage: result.nextPage,
+      prevPage: result.prevPage,
+    };
   }
 
   //metodo buscar producto por id.

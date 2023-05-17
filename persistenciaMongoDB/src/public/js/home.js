@@ -5,7 +5,7 @@ fetch("/api/products")
     const listaProductos = document.getElementById("lista-productos");
     const ulProductos = document.createElement("ul");
     // Recorrer el array de productos y crear un <li> para cada uno
-    data.productos.forEach((producto) => {
+    data.payload.forEach((producto) => {
      console.log( producto)
       const liProducto = document.createElement("li");
       liProducto.classList.add("item-lista");

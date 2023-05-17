@@ -1,0 +1,155 @@
+ <style>
+  .lista-productos {
+    border: 1px solid black;
+    width: 96vw;
+    padding-right: 2%;
+    box-shadow: 3px 5px 5px black;
+    max-height: 100vh;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap; /* Permite ajuste automático de filas */
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    align-content: flex-start; /* Alinea las filas a la izquierda */
+    background-color: rgba(0, 0, 0, 0.681);
+  }
+
+  .item-lista {
+    text-align: center;
+    flex: 0 0 calc(25% - 20px); /* Establece el ancho de cada tarjeta */
+    margin: 10px; /* Agrega un margen entre las tarjetas */
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: inline flow-root list-item;
+    list-style: none;
+    background-color: rgb(211, 211, 207);
+  }
+  .item-button {
+    padding: 0.8rem;
+    background-color: rgba(243, 159, 14, 0.909);
+    border-radius: 40px;
+    color: rgb(255, 252, 252);
+    cursor: pointer;
+  }
+  .actual-page{
+    font-size: 1rem;
+    margin:0.5rem;
+    padding: 0.5rem;
+    border:1px solid black;
+    border-radius: 40px;
+    background-color: rgba(243, 159, 14, 0.909);
+  }
+  .next-button{
+    height: 100%;
+  }
+ .prev-button{
+    height: 100%;
+  }
+  .container-pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .item-image{
+    width: 40%;
+    height: 25%;
+
+  }
+</style>
+
+
+
+{{!-- <h1>Entrega CoderHouse</h1> --}}
+<h2>Una paginación con todos los productos</h2>
+
+
+<div class="container-pagination"id="pagination">
+  <button id="prevPageBtn">Anterior</button>
+   <p id="actualPage"></p>
+  <button id="nextPageBtn">Siguiente</button>
+</div>
+
+<div class="lista-productos" id="lista-productos"></div>
+
+<script type="module" src="/js/products.js"></script> 
+
+
+
+
+
+
+
+
+
+{{!-- opcion handlebars tengo que revisar para que renderice las variables --}}
+
+
+
+{{!--  <style>
+  .lista-productos {
+    border: 1px solid black;
+    width: 96vw;
+    padding-right: 2%;
+    box-shadow: 3px 5px 5px black;
+    max-height: 100vh;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap; /* Permite ajuste automático de filas */
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    align-content: flex-start; /* Alinea las filas a la izquierda */
+    background-color: rgba(0, 0, 0, 0.681);
+  }
+
+  .item-lista {
+    flex: 0 0 calc(25% - 20px); /* Establece el ancho de cada tarjeta */
+    margin: 10px; /* Agrega un margen entre las tarjetas */
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: inline flow-root list-item;
+    list-style: none;
+    background-color: rgb(211, 211, 207);
+  }
+  .item-button {
+    padding: 0.8rem;
+    background-color: rgba(243, 159, 14, 0.909);
+    border-radius: 40px;
+    color: rgb(255, 252, 252);
+    cursor: pointer;
+  }
+  .actual-page{
+    font-size: 1rem;
+    margin:0.5rem;
+    padding: 0.5rem;
+    border:1px solid black;
+    border-radius: 40px;
+    background-color: rgba(243, 159, 14, 0.909);
+  }
+  .next-button{
+    height: 100%;
+  }
+ .prev-button{
+    height: 100%;
+  }
+  .container-pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+</style>
+
+<script id="product-template" type="text/x-handlebars-template">
+  <div class="item-lista">
+    <h3>{{title}}</h3>
+    <h5>Category: {{category}}</h5>
+    <p>{{description}}</p>
+    <p>Price: ${{price}}</p>
+    <p>Code: {{code}}</p>
+    <button class="item-button">agregar al carrito</button>
+  </div>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
+<script src="js/products.js"></script>
+ --}}

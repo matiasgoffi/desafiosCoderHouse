@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 const productsCollection = "productos"; //asi se llamará la colección en la base de datos.
 
 const productsSchema = new mongoose.Schema({
@@ -22,6 +23,7 @@ const productsSchema = new mongoose.Schema({
   status: {
     type: Boolean,
     require: true,
+    index: true,
   },
   thumbnails: {
     type: [String],
@@ -37,5 +39,7 @@ const productsSchema = new mongoose.Schema({
   },
   
 });
+
+productsSchema.plugin(mongoosePaginate) //conecto mi modelo con el Plugin reactPaginate
 
 export const productsModel = mongoose.model(productsCollection, productsSchema); //De esta manera exporto mi modelo como productsModel.

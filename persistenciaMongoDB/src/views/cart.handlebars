@@ -1,0 +1,33 @@
+ <style>
+  .lista-productos {
+    border: 1px solid black;
+    width: 96vw;
+    padding-right: 2%;
+    box-shadow: 3px 5px 5px black;
+    max-height: 100vh;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap; /* Permite ajuste automático de filas */
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    align-content: flex-start; /* Alinea las filas a la izquierda */
+    background-color: rgba(0, 0, 0, 0.681);
+  }
+
+  .producto {
+    flex: 0 0 calc(25% - 20px); /* Establece el ancho de cada tarjeta */
+    margin: 10px; /* Agrega un margen entre las tarjetas */
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: inline flow-root list-item;
+    list-style: none;
+    background-color: rgb(211, 211, 207);
+  }
+</style>
+<h2>Una vista con los productos del carrito seleccionado</h2>
+
+<div class="container" id="container"></div>
+
+<div class="lista-productos" id="lista-productos"></div>
+
+<script type="module" src="/js/cart.js"></script>
