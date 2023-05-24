@@ -2,16 +2,34 @@ import express, { urlencoded } from "express";
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
+import sessionRouter from './routes/sessions.router.js';
 import viewRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
 import { messagesModel } from "./Dao/models/messages.js";
 import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion a la base de datos como servicio.
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+
+
 
 const PORT = 8080;
 const MONGO =
   "mongodb+srv://matiasgoffi:rugido33@cluster0.e9a5uqp.mongodb.net/ecommerce"; //?retryWrites=true&w=majority
 const app = express(); //middleware a nivel de aplicacion
+
+
+//conecto el servidor con el sistema de storage de sesiones de mongo
+app.use(session({
+  store: new MongoStore({
+      mongoUrl: MONGO,
+      ttl:3600
+  }),
+  secret:'CoderSecret',
+  resave:false,
+  saveUninitialized:false
+}))
+
 
 app.use(express.json()); //middleware a nivel de aplicacion
 app.use(urlencoded({ extended: true })); //middleware a nivel de aplicacion
@@ -24,6 +42,7 @@ app.set("view engine", "handlebars");
 app.use("/", viewRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use('/api/session', sessionRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor funcionando en el puerto: ${PORT}`);
@@ -76,7 +95,7 @@ io.on("connection", (socket) => {
 const bdMongo = async () => {
     
     
-  const conection = mongoose.connect(MONGO);
+const conection = mongoose.connect(MONGO);
   //aca va la logica de los agreggate
 
 }

@@ -1,0 +1,62 @@
+<style>
+    .title{
+        text-align: center;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5%;
+        padding: 2%;
+        background-color: rgba(0, 0, 0, 0.681);
+    }
+    .label{
+     color: white;
+      }
+    .send-button{
+     margin-top: 2%;
+     width: 10%;
+      border-radius: 40px;
+    background-color: rgb(78, 78, 183);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    }
+    .text-register{
+    color: white;
+    }
+    .link-register{
+    color: rgb(56, 182, 255);
+    }
+    @media screen and (min-width:380px) and (max-width: 768px) {
+    .send-button{
+            width: 20%;
+        }
+    }
+    @media screen  and (max-width: 380px) {
+    .send-button{
+            width: 35%;
+        }
+    }
+</style>
+
+<div>
+    <h1 class="title">Login</h1>
+    <form class="form" id="loginForm">
+        <label class="label">Email</label>
+        <input class="input" id="inputemail" name="email">
+        <br>
+        <label class="label">Contraseña</label>
+        <input class="input" name="password" type="password">
+        <input class="send-button" type="submit">
+        <p class="text-register">No estás resgistrado? <a class="link-register" href="/register">Regístrate aquí</a></p>
+    </form>
+  
+</div>
+<script type="module" src="/js/login.js"></script>
+
+
+
+
