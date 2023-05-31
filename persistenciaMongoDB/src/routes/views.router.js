@@ -3,7 +3,9 @@ import { Router } from "express";
 const router = Router();
 
 const publicAcces = (req,res,next) =>{
-  if(req.session.user) return res.redirect('/products');
+  if (req.session.user && req.path !== "/resetPassword") {
+    return res.redirect("/products");
+  }
   next();
 }
 
@@ -51,5 +53,7 @@ router.get('/register', publicAcces, (req,res)=>{
 router.get('/', publicAcces, (req,res)=>{
   res.render('login')
 })
-
+router.get('/resetPassword', publicAcces, (req,res)=>{
+  res.render('resetPassword')
+})
 export default router;
