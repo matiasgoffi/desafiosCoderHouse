@@ -1,5 +1,4 @@
 import { cartsModel } from "../../models/carts.js";
-import { productModel } from "../../models/cartsProducts.js";
 
 export default class CartManager {
   // Elimino el parámetro "path" ya que no se usará con Mongoose
@@ -84,6 +83,13 @@ export default class CartManager {
       }
     } catch (error) {
       throw new Error(`Error al actualizar la cantidad del producto: ${error.message}`);
+    }
+  }
+  async deleteCart(cartId) {
+    try {
+      await cartsModel.findByIdAndDelete(cartId);
+    } catch (error) {
+      throw new Error("Error al eliminar el carrito: " + error.message);
     }
   }
 }

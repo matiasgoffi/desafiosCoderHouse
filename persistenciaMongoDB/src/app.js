@@ -41,14 +41,17 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use("/", viewRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
+//app.use('/api/session/current', sessionRouter);
 
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 const server = app.listen(PORT, () => {

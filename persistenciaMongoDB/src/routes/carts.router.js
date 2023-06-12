@@ -11,6 +11,7 @@ router.post("/", async (req, res) => {
   try {
     const nuevoCarrito = await cartManager.createCart(); // Llama al método createCart de CartManager
     res.send({ nuevoCarrito });
+   
     // Registra el movimiento en el archivo de registro
     const method = "POST /carritos";
     managerAccess.crearRegistro(method);
