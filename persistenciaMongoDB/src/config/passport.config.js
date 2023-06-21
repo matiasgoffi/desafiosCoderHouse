@@ -3,6 +3,7 @@ import local from "passport-local";
 import userService from "../Dao/models/User.model.js";
 import GitHubStrategy from "passport-github2";
 import { createHash, validatePassword } from "../utils.js";
+import { config } from "./config.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -21,7 +22,7 @@ const initializePassport = () => {
           }
 
           let role;
-          if(email=== "adminCoder@coder.com" && password === "adminCod3r123"){
+          if(email=== config.auth.account && password === config.auth.pass){
             role = "admin";
           }
           const newUser = {
@@ -74,8 +75,8 @@ const initializePassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.a9731848c8941264",
-        clientSecret: "e33675a7a56d6057df98f5af5bdd0cf6ba06a063",
+        clientID: config.github.clientId,
+        clientSecret: config.github.clientSecret,
         callbackURL: "http://localhost:8080/api/session/githubcallback",
       },
       async (accesToken, refreshToken, profile, done) => {

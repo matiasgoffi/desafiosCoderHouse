@@ -1,4 +1,5 @@
 import { cartsModel } from "../../models/carts.js";
+import { Product } from "../../models/cartsProducts.js";
 
 export default class CartManager {
   // Elimino el parámetro "path" ya que no se usará con Mongoose

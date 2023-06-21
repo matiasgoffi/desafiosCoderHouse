@@ -40,6 +40,6 @@ const productsSchema = new mongoose.Schema({
   
 });
 
-productsSchema.plugin(mongoosePaginate) //conecto mi modelo con el Plugin reactPaginate
+productsSchema.plugin(mongoosePaginate) //conecto mi modelo con el Plugin Paginate
 
 export const productsModel = mongoose.model(productsCollection, productsSchema); //De esta manera exporto mi modelo como productsModel.

@@ -66,15 +66,15 @@ export default class ProductManager {
   //metodo buscar producto por id.
   async getProductsById(id) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return null; // Indica que el ID no es válido
+      throw new Error("ID de producto inválido");
     }
+  
     const product = await productsModel.findOne({ _id: id });
-
+  
     if (product) {
       return product;
     } else {
-      console.log("no se encontró el id");
-      return null;
+      throw new Error("No se encontró el producto con el ID proporcionado");
     }
   }
 

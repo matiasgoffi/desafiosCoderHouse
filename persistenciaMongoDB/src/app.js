@@ -12,12 +12,17 @@ import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion 
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import initializePassport from './config/passport.config.js';
+import { config } from "./config/config.js"
 
 
 
-const PORT = 8080;
-const MONGO =
-  "mongodb+srv://matiasgoffi:rugido33@cluster0.e9a5uqp.mongodb.net/ecommerce"; //?retryWrites=true&w=majority
+
+console.log(config)
+
+
+const PORT = config.server.port;
+const MONGO =config.mongo.url;
+
 const app = express(); //middleware a nivel de aplicacion
 
 
@@ -27,7 +32,7 @@ app.use(session({
       mongoUrl: MONGO,
       ttl:3600
   }),
-  secret:'CoderSecret',
+  secret:config.mongo.secret,
   resave:false,
   saveUninitialized:false
 }))

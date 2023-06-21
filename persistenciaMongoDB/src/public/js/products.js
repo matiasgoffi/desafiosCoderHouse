@@ -74,19 +74,19 @@ function fetchProducts(url) {
 // Event Listener para el botón "Anterior"
 prevButton.addEventListener("click", () => {
   const page = prevButton.dataset.page;
-  const url = `/api/products?page=${page}`;
+  const url = `/api/products/limit?page=${page}`;
   fetchProducts(url);
 });
 
 // Event Listener para el botón "Siguiente"
 nextButton.addEventListener("click", () => {
   const page = nextButton.dataset.page;
-  const url = `/api/products?page=${page}`;
+  const url = `/api/products/limit?page=${page}`;
   fetchProducts(url);
 });
 
 // Cargar los productos iniciales al cargar la página
-fetchProducts("/api/products"); 
+fetchProducts("/api/products/limit"); 
 
 
 
