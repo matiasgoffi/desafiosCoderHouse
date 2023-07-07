@@ -6,7 +6,8 @@ import { createHash, validatePassword } from "../utils.js";
 import { config } from "./config.js";
 
 const LocalStrategy = local.Strategy;
-
+export let currentRole;
+export let currentEmail;
 const initializePassport = () => {
   passport.use(
     "register",
@@ -19,6 +20,7 @@ const initializePassport = () => {
           if (user) {
             console.log("El usuario existe");
             return done(null, false);
+            
           }
 
           let role;
@@ -50,7 +52,8 @@ const initializePassport = () => {
       async (username, password, done) => {
         try {
           const user = await userService.findOne({ email: username });
-          //console.log(user);
+          currentRole = user.role;
+          currentEmail = user.email;
           if (!user) {
             console.log("No existe el usuario");
             return done(null, false);
@@ -91,6 +94,7 @@ const initializePassport = () => {
           const user = await userService.findOne({
             email: email,
           });
+          currentEmail = user.email;//chequear de recibir el email de quien se loguea en github y no el nombre de usuario
           if (!user) {
             let newUser = {
               first_name: profile._json.name,
@@ -102,6 +106,8 @@ const initializePassport = () => {
             const result = await userService.create(newUser);
             done(null, result);
           } else {
+            
+           
             //ya existe el usuario
             done(null, user);
           }

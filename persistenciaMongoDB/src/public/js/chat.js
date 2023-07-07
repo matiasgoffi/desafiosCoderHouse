@@ -18,7 +18,7 @@ inputEmail.addEventListener("blur", () => {
 });
 
 input.addEventListener("keyup", (evt) => {
-  if (evt.key === "Enter") {
+  if (evt.key === "Enter" ) {
     socket.emit("message", { email: inputEmail.value, message: input.value });
     input.value = "";
     inputEmail.value = "";

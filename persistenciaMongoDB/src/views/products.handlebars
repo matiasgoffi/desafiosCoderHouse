@@ -19,12 +19,13 @@
     width: 20%;
     margin: 10px; 
     padding: 0%;
+    color: #f1f1f1;
     border: 1px solid #ccc;
     border-radius: 4%;
     box-shadow: 2px 2px 10px rgba(232, 232, 232);
     display: inline flow-root list-item;
     list-style: none;
-    background-color: rgba(211, 211, 207, 0.53);
+    background-color: rgb(86, 86, 84);
   }
   .item-lista:hover {
    transform: scale(1.1);
@@ -88,13 +89,47 @@
     position: absolute;
     right: 10px;
     top: 5px;
-    width: 10%;
+    width: 150px;
     height: 5%;
     border-radius: 40px;
     background-color: rgb(78, 78, 183);
     color: white;
     font-size: 1rem;
     cursor: pointer;
+  }
+    .button-comprar {
+    position: absolute;
+    right: 90px;
+    top: calc(5px + 5% + 5px);
+    width: 150px;
+    height: 5%;
+    border-radius: 40px;
+    background-color: rgb(91, 169, 96);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+   .contenedor-carrito {
+    position: absolute;
+    top: calc(5px + 5% + 5px);
+    right: 10px;
+    width: 40px;
+    height: 5%;
+    border-radius: 5px;
+    background-color: rgb(77, 77, 77);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+     padding-left: 1%;
+    padding-right: 1%;
+  }
+  .number-carrito {
+    color: antiquewhite;
+    font-weight: 800;
+    position: relative;
+    bottom: 20%;
+    
   }
   .user-data {
     margin-top: 5%;
@@ -105,9 +140,8 @@
     border: 1px solid black;
     width: fit-content;
     padding: 1rem;
-    background-color: rgba(214, 115, 80, 0.795);
+    background-color: rgba(14, 19, 52, 0.795);
   }
-
 @media screen  and (min-width: 1400px) and (max-width: 1700px) {
     .item-button {
       width: 60%;
@@ -132,9 +166,6 @@
     .item-lista {
         height: 120%;
   }
-  .button-logout{
-    width: 15%;
-  }
 }
 @media screen and (min-width: 380px) and (max-width: 480px) {
     .item-button {
@@ -145,10 +176,7 @@
         height: 120%;
         width: 40%;
   }
-    .button-logout{
-       width: 15%;
-  }
-   .user-data {
+  .user-data {
     margin-top: 10%;
   }
 }
@@ -162,9 +190,6 @@
         height: 120%;
         width: 100%;
   }
-    .button-logout{
-       width: 20%;
-  }
   .user-data {
     margin-top: 10%;
   }
@@ -172,7 +197,8 @@
 
 </style>
 
-
+<a href="/api/session/logout"><button class="button-comprar">comprar</button></a>
+<div class="contenedor-carrito"><h5 class="number-carrito"></h5></div>
 <a href="/api/session/logout"><button class="button-logout">Salir</button></a>
 <div class="contenedorDatosUsuario">
   <h1 class="user-data">Bienvenido/a:  
@@ -182,8 +208,8 @@
       {{user.email}}
     {{/if}} 
     </h1>
-  <h3 class="user-data">email: {{user.email}}</h3>
-  <h3 class="user-data">edad: {{user.age}}</h3>
+  <h3 class="user-data">Email: {{user.email}}</h3>
+  <h3 class="user-data">Edad: {{user.age}}</h3>
 </div>
 {{!-- agregar validacion para el email que piden y tomarlo como admin email: adminCoder@coder.com pass: adminCod3r123 --}}
 <script>
@@ -204,7 +230,7 @@
 
 
 
-<h2>Una paginación con todos tus productos</h2>
+<h2>Nuestros productos</h2>
 
 
 <div class="container-pagination"id="pagination">

@@ -1,10 +1,12 @@
 import ManagerAccess from "../Dao/managers/ManagerAcces.js";
 import ProductManager from "../Dao/Managers/productManager/ProductManager.js";
+import ProductDTO from "../Dao/DTOs/productDTO.js";
 import { io } from "../app.js";
+import SessionController from "./sessions.controller.js";
 
 const productManager = new ProductManager();
 const managerAccess = new ManagerAccess();
-
+const sessioncontroller = new SessionController()
 export default class ProductsController{
     getProductsFromPage= async (req, res)=>{
         const Limit = req.params.limit;
@@ -78,61 +80,61 @@ getProductById = async(req, res) => {
 
 }
 
-createProduct=async(req,res)=>{
-    await managerAccess.crearRegistro("alta de producto");
+createProduct = async (req, res) => {
+  await managerAccess.crearRegistro("alta de producto");
 
-    const {
-      title,
-      description,
-      price,
-      code,
-      status,
-      thumbnails,
-      stock,
-      category,
-    } = req.body;
-  
-    // Validaciones requeridas
-    if (
-      !title ||
-      !description ||
-      !code ||
-      !price ||
-      !status ||
-      !stock ||
-      !category ||
-      !thumbnails ||
-      !Array.isArray(thumbnails) ||
-      !thumbnails.every((thumbnail) => typeof thumbnail === "string")
-    ) {
-      return res
-        .status(400)
-        .json({
-          error: "Solicitud inválida falta al menos una propiedad querida",
-        });
-    }
-  
-    try {
-      const nuevoProducto = await productManager.addProduct(
-        title,
-        description,
-        price,
-        code,
-        status,
-        thumbnails,
-        stock,
-        category
-      );
-  
-      // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
-      io.emit("update", nuevoProducto);
-  
-      res.send({ nuevoProducto });
-    } catch (error) {
-      console.log("cannot add product with mongoose: " + error);
-      res.status(500).send({ error: "Error al agregar el producto" });
-    }
-}
+  const {
+    title,
+    description,
+    price,
+    code,
+    status,
+    thumbnails,
+    stock,
+    category,
+  } = req.body;
+
+  // Crear instancia del DTO con los valores
+  const productDTO = new ProductDTO(
+    title,
+    description,
+    price,
+    code,
+    status,
+    thumbnails,
+    stock,
+    category
+  );
+
+  // Validaciones requeridas
+  if (
+    !productDTO.title ||
+    !productDTO.description ||
+    !productDTO.code ||
+    !productDTO.price ||
+    !productDTO.status ||
+    !productDTO.stock ||
+    !productDTO.category ||
+    !productDTO.thumbnails ||
+    !Array.isArray(thumbnails) ||
+    !productDTO.thumbnails.every((thumbnail) => typeof thumbnail === "string")) {
+    return res.status(400).json({
+      error: "Solicitud inválida falta al menos una propiedad requerida",
+    });
+  }
+
+  try {
+    const nuevoProducto = await productManager.addProduct(productDTO);
+
+    // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
+    io.emit("update", nuevoProducto);
+
+    res.send({ nuevoProducto });
+  } catch (error) {
+    console.log("cannot add product with mongoose: " + error);
+    res.status(500).send({ error: "Error al agregar el producto" });
+  }
+};
 
 updateProduct= async(req, res)=>{
     await managerAccess.crearRegistro("actualiza un producto");
@@ -147,7 +149,7 @@ updateProduct= async(req, res)=>{
       stock,
       category,
     } = req.body;
-  
+
     // Validaciones requeridas
     if (!id) {
       return res
@@ -229,7 +231,7 @@ updateProduct= async(req, res)=>{
       if (!productoActualizado) {
         return res.status(404).json({ error: "El producto no existe" });
       }
-  
+      
       res.send({ productoActualizado });
     } catch (error) {
       console.log("Error al actualizar el producto: " + error);

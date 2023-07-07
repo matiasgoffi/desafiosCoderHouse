@@ -12,10 +12,9 @@ import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion 
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import initializePassport from './config/passport.config.js';
-import { config } from "./config/config.js"
-
-
-
+import { config } from "./config/config.js";
+import accessMiddleware from "./middlewares/accessMiddleware.js";
+import userModel from "./Dao/models/User.model.js";
 
 console.log(config)
 
@@ -36,7 +35,9 @@ app.use(session({
   resave:false,
   saveUninitialized:false
 }))
-
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json()); //middleware a nivel de aplicacion
 app.use(urlencoded({ extended: true })); //middleware a nivel de aplicacion
@@ -46,9 +47,6 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 app.use("/", viewRouter);
@@ -115,5 +113,4 @@ const conection = mongoose.connect(MONGO);
 
 }
 bdMongo();
-
 

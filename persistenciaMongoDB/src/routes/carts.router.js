@@ -1,5 +1,6 @@
 import { Router } from "express";
 import CartsController from "../controllers/carts.controller.js";
+import accessMiddleware from "../middlewares/accessMiddleware.js";
 
 const router = Router();
 const cartscontroller = new CartsController(); 
@@ -12,7 +13,7 @@ router.get("/:cid", cartscontroller.getCartForId)
 
 
 // Ruta POST :cid/product/:pid add product by cart id with mongoose
-router.post("/:cid/product/:pid",cartscontroller.addProductToCart);
+router.post("/:cid/products/:pid", accessMiddleware("user"), cartscontroller.addProductToCart);
 
 
 // Ruta DELETE :cid/product/:pid add product by cart id with mongoose
@@ -29,5 +30,7 @@ router.put("/:cid/product/:pid", cartscontroller.updateProductQuantity);
 // Ruta DELETE :cid elimina todos los productos del carrito enviado por cid
 router.delete("/:cid",cartscontroller.deleteAllProductsFromCart);
 
+//Ruta PURCHASE :cid 
+router.post("/:cid/purchase", cartscontroller.generateTicket);
 
 export default router;

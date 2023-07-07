@@ -1,13 +1,10 @@
 import { Router } from "express";
-import ManagerAccess from "../Dao/managers/ManagerAcces.js";
-import ProductManager from "../Dao/Managers/productManager/ProductManager.js";
 import ProductsController from "../controllers/products.controller.js";
+import accessMiddleware from "../middlewares/accessMiddleware.js";
 
 const router = Router();
 
 //const path = "./files/productos.json";
-const productManager = new ProductManager();
-const managerAccess = new ManagerAccess();
 const productscontroller = new ProductsController(); // Crea una instancia de ManagerAccess
 
 
@@ -20,13 +17,13 @@ router.get("/:pid",productscontroller.getProductById);
 
 
 // ruta POST products with mongoose
-router.post("/",productscontroller.createProduct);
+router.post("/",accessMiddleware("admin"), productscontroller.createProduct);
 
 
 //ruta PUT actualizar producto with mongoose
-router.put("/:pid",productscontroller.updateProduct);
+router.put("/:pid", accessMiddleware("admin"), productscontroller.updateProduct);
 
 // ruta DELETE product with mongoose
-router.delete("/:pid", productscontroller.deleteProduct);
+router.delete("/:pid", accessMiddleware("admin"), productscontroller.deleteProduct);
 
 export default router;

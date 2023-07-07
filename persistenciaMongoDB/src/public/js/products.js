@@ -1,3 +1,10 @@
+ // Variable global para almacenar el contador
+let contador = 0;
+
+// Obtener referencia al elemento div del contador
+const contenedorCarrito = document.querySelector(".contenedor-carrito");
+const numberCarrito = contenedorCarrito.querySelector(".number-carrito");
+ 
  // Obtener referencia a los elementos del DOM
 const listaProductos = document.getElementById("lista-productos");
 const prevButton = document.getElementById("prevPageBtn");
@@ -45,6 +52,15 @@ function fetchProducts(url) {
         const buttonElement = document.createElement("button");
         buttonElement.innerText = "agregar al carrito";
         buttonElement.classList.add("item-button");
+        //AGREGAR LOGICA PARA DAR UN ID UNICO Y LUEGO USAR ESE ID PARA CARGAR UN PRODUCTO
+        buttonElement.addEventListener("click", () => {
+          // Aumentar el contador en 1
+          contador++;
+        
+          // Actualizar el valor del contador en el elemento div
+          numberCarrito.textContent = contador;
+        });
+
 
         // Agregar los elementos al contenedor de la tarjeta
         cardProducto.appendChild(imageElement);
