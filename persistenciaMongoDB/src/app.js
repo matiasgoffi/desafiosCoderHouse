@@ -7,16 +7,15 @@ import sessionRouter from './routes/sessions.router.js';
 import viewRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
+import mockingRouter from "./routes/mocking.router.js";
 import { messagesModel } from "./Dao/models/messages.js";
 import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion a la base de datos como servicio.
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import initializePassport from './config/passport.config.js';
 import { config } from "./config/config.js";
-import accessMiddleware from "./middlewares/accessMiddleware.js";
-import userModel from "./Dao/models/User.model.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
-console.log(config)
 
 
 const PORT = config.server.port;
@@ -50,9 +49,12 @@ app.set("view engine", "handlebars");
 
 
 app.use("/", viewRouter);
+app.use("/", mockingRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
+app.use(errorHandler)
+
 //app.use('/api/session/current', sessionRouter);
 
 

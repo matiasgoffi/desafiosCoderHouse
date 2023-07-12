@@ -3,6 +3,11 @@ import ProductManager from "../Dao/Managers/productManager/ProductManager.js";
 import ProductDTO from "../Dao/DTOs/productDTO.js";
 import { io } from "../app.js";
 import SessionController from "./sessions.controller.js";
+import  CustomError  from "../services/customError.services.js";
+import EError  from "../enums/Error.js";
+import { generateProductErrorInfo } from "../services/productErrorInfo.js";
+import { generateProductErrorParamsInfo } from "../services/productErrorParams.js";
+import {errorHandler} from "../middlewares/errorHandler.js";
 
 const productManager = new ProductManager();
 const managerAccess = new ManagerAccess();
@@ -57,12 +62,21 @@ export default class ProductsController{
           res.status(500).send(payload);
         }
     }
-getProductById = async(req, res) => {
+getProductById = async(req, res, next) => {
     await managerAccess.crearRegistro("consultar producto");
 
     const id = req.params.pid;
-  
     try {
+    const productid = parseInt(id);
+    if (Number.isNaN(productid)){
+     let error =  CustomError.createError({
+        name: "id del producto incorrecto",
+        cause: generateProductErrorParamsInfo(id),
+        message: "Error obteniendo el producto por id",
+        errorCode: EError.INVALID_PARAM,
+      })
+      res.status(400).send({ error: "No se encontró el producto", error });
+    }
       const producto = await productManager.getProductsById(id);
       if (producto) {
         const payload = {
@@ -74,13 +88,12 @@ getProductById = async(req, res) => {
         res.status(404).send({ error: "No se encontró el producto" });
       }
     } catch (error) {
-      console.log("cannot get product with mongoose: " + error);
-      res.status(500).send({ error: "Error al obtener el producto" });
+      next(error)
     }
 
 }
 
-createProduct = async (req, res) => {
+createProduct = async (req, res, next) => {
   await managerAccess.crearRegistro("alta de producto");
 
   const {
@@ -93,7 +106,7 @@ createProduct = async (req, res) => {
     stock,
     category,
   } = req.body;
-
+ 
   // Crear instancia del DTO con los valores
   const productDTO = new ProductDTO(
     title,
@@ -106,34 +119,39 @@ createProduct = async (req, res) => {
     category
   );
 
-  // Validaciones requeridas
-  if (
-    !productDTO.title ||
-    !productDTO.description ||
-    !productDTO.code ||
-    !productDTO.price ||
-    !productDTO.status ||
-    !productDTO.stock ||
-    !productDTO.category ||
-    !productDTO.thumbnails ||
-    !Array.isArray(thumbnails) ||
-    !productDTO.thumbnails.every((thumbnail) => typeof thumbnail === "string")) {
-    return res.status(400).json({
-      error: "Solicitud inválida falta al menos una propiedad requerida",
-    });
-  }
-
   try {
-    const nuevoProducto = await productManager.addProduct(productDTO);
-
-    // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
-    io.emit("update", nuevoProducto);
-
-    res.send({ nuevoProducto });
+    if (
+      !productDTO.title ||
+      !productDTO.description ||
+      !productDTO.code ||
+      !productDTO.price ||
+      !productDTO.status ||
+      !productDTO.stock ||
+      !productDTO.category ||
+      !productDTO.thumbnails ||
+      !Array.isArray(thumbnails) ||
+      !productDTO.thumbnails.every((thumbnail) => typeof thumbnail === "string")) {
+  
+       CustomError.createError({
+          name: "error al crear producto",
+          cause: generateProductErrorInfo(req.body), 
+          message: "Error al cargar el producto", 
+          errorCode: EError.INVALID_JSON,
+        })
+      /*  return res.status(400).json({
+        error: "Solicitud inválida falta al menos una propiedad requerida",
+      });  */
+    }
+    if (productDTO){
+      const nuevoProducto = await productManager.addProduct(productDTO);
+     // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
+      io.emit("update", nuevoProducto);
+      res.send({"PRODUCTO AGREGADO": nuevoProducto });
+    } 
   } catch (error) {
-    console.log("cannot add product with mongoose: " + error);
-    res.status(500).send({ error: "Error al agregar el producto" });
+    next(error)
   }
+
 };
 
 updateProduct= async(req, res)=>{

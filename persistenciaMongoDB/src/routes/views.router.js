@@ -1,4 +1,5 @@
 import { Router } from "express";
+import compression from "express-compression";
 
 const router = Router();
 
@@ -21,7 +22,7 @@ const privateAcces = (req,res,next)=>{
   next();
 }
 
-router.get("/products", privateAcces, (req, res) => {
+router.get("/products", privateAcces, compression({brotli:{enable:true,zlib:{}}}),(req, res) => {
   res.render('products',{
     user: req.session.user
 })
