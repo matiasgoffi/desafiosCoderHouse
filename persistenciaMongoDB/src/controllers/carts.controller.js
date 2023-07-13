@@ -10,6 +10,9 @@ import { currentEmail } from "../config/passport.config.js";
 import mongoose from "mongoose";
 import userModel from "../Dao/models/User.model.js";
 import { transport } from "../config/gmail.js";
+import  CustomError  from "../services/customError.services.js";
+import EError  from "../enums/Error.js";
+import { generateProductErrorParamsInfo } from "../services/productErrorParams.js";
 
 
 
@@ -106,11 +109,21 @@ export default class CartsController {
       }
   };
 
-  deleteProductFromCart = async (req, res) => {
+  deleteProductFromCart = async (req, res, next) => {
     try {
       const cid = req.params.cid; // ID del carrito
       const pid = req.params.pid; // ID del producto a eliminar
 
+      const productid = parseInt(pid);
+      if (Number.isNaN(productid)){
+       let error =  CustomError.createError({
+          name: "id del producto incorrecto",
+          cause: generateProductErrorParamsInfo(pid),
+          message: "Error al eliminar el producto por id",
+          errorCode: EError.INVALID_PARAM,
+        })
+        res.status(400).send({ error: "No se encontró el producto", error });
+      }
       // Obtener el carrito por ID
       const cart = await cartManager.getCartById(cid);
       if (!cart) {
@@ -140,12 +153,10 @@ export default class CartsController {
       const method = "DELETE /carritos";
       managerAccess.crearRegistro(method);
     } catch (error) {
-      console.error(error);
-      res
-        .status(500)
-        .send({ error: "Ocurrió un error al eliminar el carrito" });
+      next(error)
     }
-  };
+  }
+
   updateCartWithProducts = async (req, res) => {
     try {
       const cid = req.params.cid; // ID del carrito
@@ -179,25 +190,30 @@ export default class CartsController {
         .send({ error: "Ocurrió un error al actualizar el carrito" });
     }
   };
-  updateProductQuantity = async (req, res) => {
+  updateProductQuantity = async (req, res, next) => {
     try {
       const cid = req.params.cid;
       const pid = req.params.pid;
       const quantity = req.body.quantity;
-
+    
+      const productid = parseInt(pid);
+      if (Number.isNaN(productid)){
+       let error =  CustomError.createError({
+          name: "id del producto incorrecto",
+          cause: generateProductErrorParamsInfo(pid),
+          message: "Error al actualizar la cantidad del producto por id",
+          errorCode: EError.INVALID_PARAM,
+        })
+      }
       // Actualiza la cantidad del producto en el carrito
       await cartManager.updateProductQuantity(cid, pid, quantity);
 
       res.send({ message: "Cantidad del producto actualizada correctamente" });
     } catch (error) {
-      console.error(error);
-      res
-        .status(500)
-        .send({
-          error: "Ocurrió un error al actualizar la cantidad del producto",
-        });
+     next(error)
     }
   };
+
   deleteAllProductsFromCart = async (req, res) => {
     try {
       const cid = req.params.cid;

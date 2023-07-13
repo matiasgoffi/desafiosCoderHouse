@@ -16,7 +16,7 @@ router.get("/:cid", cartscontroller.getCartForId)
 router.post("/:cid/products/:pid", accessMiddleware("user"), cartscontroller.addProductToCart);
 
 
-// Ruta DELETE :cid/product/:pid add product by cart id with mongoose
+// Ruta DELETE :cid/product/:pid delete product by cart id with mongoose
 router.delete("/:cid/product/:pid", cartscontroller.deleteProductFromCart);
 
 
