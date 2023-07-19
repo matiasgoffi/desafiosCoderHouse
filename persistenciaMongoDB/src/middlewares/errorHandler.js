@@ -1,7 +1,7 @@
 import  EError  from "../enums/Error.js";
 
 export const errorHandler = (error, req, res, next) => {
-    console.log("ERROR CODE:", error); 
+    req.logger.error(`ERROR CODE: ${error}`)
     switch (error.code) {
         case EError.INVALID_JSON: 
         res.json({ status: "error",error: error.cause, message: error.message })

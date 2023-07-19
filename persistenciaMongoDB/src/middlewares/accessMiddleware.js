@@ -2,7 +2,7 @@ import { currentRole } from "../config/passport.config.js";
 
 const accessMiddleware = (role) => (req, res, next) => {
   try {
-    console.log(currentRole);
+    req.logger.info(currentRole)
     if (currentRole === role) {
       next();
     } else {
@@ -10,7 +10,7 @@ const accessMiddleware = (role) => (req, res, next) => {
       res.status(401).json({ error: "Acceso no autorizado" });
     }
   } catch (error) {
-    console.error("Error:", error);
+    req.logger.error(`error: ${error}`)
     // Pasar el error al siguiente middleware de manejo de errores
     next(error);
   }

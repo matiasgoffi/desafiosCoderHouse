@@ -54,7 +54,7 @@ export default class ProductsController{
       
           res.send( payload);
         } catch (error) {
-          console.log("cannot get products with mongoose: " + error);
+          req.logger.error(`error al obtener productos: ${error}`)
           const payload = {
             status: "error",
             error: "Error al obtener los productos",
@@ -88,6 +88,7 @@ getProductById = async(req, res, next) => {
         res.status(404).send({ error: "No se encontró el producto" });
       }
     } catch (error) {
+      req.logger.error("error al obtener producto por ID")
       next(error)
     }
 
@@ -149,6 +150,7 @@ createProduct = async (req, res, next) => {
       res.send({"PRODUCTO AGREGADO": nuevoProducto });
     } 
   } catch (error) {
+    req.logger.error("error al crear producto")
     next(error)
   }
 
@@ -252,7 +254,7 @@ updateProduct= async(req, res)=>{
       
       res.send({ productoActualizado });
     } catch (error) {
-      console.log("Error al actualizar el producto: " + error);
+      req.logger.error(`error al actualizar producto: ${error}`)
       res.status(500).send({ error: "Error al actualizar el producto" });
     }
 
@@ -271,7 +273,7 @@ deleteProduct= async(req,res)=>{
   
       res.send(`producto con id ${id} eliminado exitosamente`);
     } catch (error) {
-      console.log("cannot delete product with mongoose: " + error);
+      req.logger.error(`error al eliminar el producto: ${error}`)
       res.status(500).send({ error: "Error al eliminar el producto" });
     }
 }

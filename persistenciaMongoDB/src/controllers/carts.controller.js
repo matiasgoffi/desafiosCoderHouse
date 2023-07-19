@@ -16,7 +16,6 @@ import { generateProductErrorParamsInfo } from "../services/productErrorParams.j
 
 
 
-
 const cartManager = new CartManager(); // Creo una instancia de CartManager
 const managerAccess = new ManagerAccess(); // Creo una instancia de ManagerAccess
 const productManager = new ProductManager();//Creo instancia del ProductManager
@@ -35,7 +34,7 @@ export default class CartsController {
       const method = "POST /carritos";
       managerAccess.crearRegistro(method);
     } catch (error) {
-      console.error(error);
+      req.logger.error("error al crear el carrito")
       res.status(500).send({ error: "Ocurrió un error al crear el carrito" });
     }
   };
@@ -51,7 +50,7 @@ export default class CartsController {
       const method = "GET /carrito";
       managerAccess.crearRegistro(method);
     } catch (error) {
-      console.error(error);
+      req.logger.error("error al obtener el carrito por ID")
       res.status(404).send({ error: error.message }); // Enviar una respuesta con el mensaje de error adecuado
     }
   };
@@ -102,7 +101,7 @@ export default class CartsController {
       const method = "POST / agrego producto al carrito";
       managerAccess.crearRegistro(method);
        } catch (error) {
-      console.error(error);
+        req.logger.error("error al agregar el producto al carrito")
       res
         .status(500)
         .send({ error: "Ocurrió un error al procesar la solicitud" });
@@ -153,6 +152,7 @@ export default class CartsController {
       const method = "DELETE /carritos";
       managerAccess.crearRegistro(method);
     } catch (error) {
+      req.logger.error("error al eliminar el producto del carrito")
       next(error)
     }
   }
@@ -184,7 +184,7 @@ export default class CartsController {
       const method = "PUT /carritos";
       managerAccess.crearRegistro(method);
     } catch (error) {
-      console.error(error);
+      req.logger.error("error al actualizar el carrito con los productos cargados")
       res
         .status(500)
         .send({ error: "Ocurrió un error al actualizar el carrito" });
@@ -210,6 +210,7 @@ export default class CartsController {
 
       res.send({ message: "Cantidad del producto actualizada correctamente" });
     } catch (error) {
+      req.logger.error("error al actualizar producto")
      next(error)
     }
   };
@@ -229,7 +230,7 @@ export default class CartsController {
       await cartManager.updateCart(cart);
         res.send({ message: "Productos eliminados correctamente" });
         } catch (error) {
-      console.error(error);
+      req.logger.error("error al eliminar los productos del carrito")
       res
         .status(500)
         .send({
@@ -313,7 +314,7 @@ export default class CartsController {
         res.send("el carrito no existe")
       } 
     } catch (error) {
-      console.log(error); // Imprimir el error en la consola
+      req.logger.error("error al procesar su compra")
       res.status(500).send("Ocurrió un error al procesar la compra"); // Enviar una respuesta de error al cliente
     }
   }

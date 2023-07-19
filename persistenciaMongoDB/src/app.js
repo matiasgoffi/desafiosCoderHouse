@@ -8,6 +8,7 @@ import viewRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js"; //cuando se importa le damos un nombre significativo, em este caso usersRouter y petsRouter
 import cartsRouter from "./routes/carts.router.js";
 import mockingRouter from "./routes/mocking.router.js";
+import loggerRouter from "./routes/loggers.router.js";
 import { messagesModel } from "./Dao/models/messages.js";
 import mongoose from "mongoose"; //importo Mongoose para conectar la aplicacion a la base de datos como servicio.
 import session from 'express-session';
@@ -15,7 +16,7 @@ import MongoStore from 'connect-mongo';
 import initializePassport from './config/passport.config.js';
 import { config } from "./config/config.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
-
+import { addLogger } from "./utils/logger.js";
 
 
 const PORT = config.server.port;
@@ -23,6 +24,8 @@ const MONGO =config.mongo.url;
 
 const app = express(); //middleware a nivel de aplicacion
 
+//WINSTON LOGGER
+app.use(addLogger);
 
 //conecto el servidor con el sistema de storage de sesiones de mongo
 app.use(session({
@@ -50,14 +53,14 @@ app.set("view engine", "handlebars");
 
 app.use("/", viewRouter);
 app.use("/", mockingRouter);
+app.use("/", loggerRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
 app.use(errorHandler)
 
+
 //app.use('/api/session/current', sessionRouter);
-
-
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor funcionando en el puerto: ${PORT}`);

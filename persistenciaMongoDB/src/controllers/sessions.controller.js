@@ -13,7 +13,7 @@ export default class SessionController {
             // La autenticación falló, el usuario ya existe
             return res.status(400).json({ status: "error", error: "User already exists" });
           }else {
-            console.log("User registered"); // Imprimir el mensaje por consola
+            req.logger.info("usuario registrado")
             res.status(200).json({ status: "success", message: "User registered" });
         }
     }
@@ -56,7 +56,7 @@ export default class SessionController {
         });
     }
     failLogin=async(req,res)=>{
-        console.log("Fallo en el ingreso");
+      req.logger.error("falló en el ingreso")
         res.status(400).json({ status: "error", error: "error en el ingreso" });
     }
 
@@ -88,15 +88,15 @@ export default class SessionController {
           const user = req.session.user;
          // Llama al método getUserDTOFromSession de UserManager para obtener el userDTO
          const userDTO = await usermanager.getUserDTOFromSession(user);
-         console.log(userDTO)
        
           // Devuelve el DTO de usuario como respuesta
           res.status(200).json({ status: "success", payload: userDTO });
         } catch (error) {
-          console.log(error)
+          req.logger.error("error al obtener la sesion actual")
           res.status(500).json({ status: "error", error: "Error al obtener la sesión actual" });
         }
       } else {
+        req.logger.warning("no hay usuario actual")
         res.status(400).json({ status: "error", error: "No hay usuario actual" });
       }
     };

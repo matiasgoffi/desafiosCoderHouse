@@ -18,7 +18,7 @@ const initializePassport = () => {
         try {
           const user = await userService.findOne({ email: username });
           if (user) {
-            console.log("El usuario existe");
+            req.logger.error("el usuario no existe")
             return done(null, false);
             
           }
@@ -55,7 +55,7 @@ const initializePassport = () => {
           currentRole = user.role;
           currentEmail = user.email;
           if (!user) {
-            console.log("No existe el usuario");
+            req.logger.error("el usuario no existe")
             return done(null, false);
           }
           if (!validatePassword(password, user)) return done(null, false);
@@ -84,7 +84,7 @@ const initializePassport = () => {
       },
       async (accesToken, refreshToken, profile, done) => {
         try {
-          console.log(profile); //vemos la info que nos da GitHub
+          req.logger.info(profile)
 
           let email = profile._json.email;
           if (!email) {
