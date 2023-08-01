@@ -48,7 +48,16 @@ router.get('/register', publicAcces, (req,res)=>{
 router.get('/', publicAcces, (req,res)=>{
   res.render('login')
 })
-router.get('/resetPassword', publicAcces, (req,res)=>{
-  res.render('resetPassword')
-})
+router.get("/failLogin", (req,res)=>{
+  res.render("failLogin") ;
+}); // Agrega esta línea para la vista "faillogin"
+
+router.get("/forgot-password",(req,res)=>{
+  res.render("forgotPassword");
+});
+
+router.get("/reset-password",(req,res)=>{
+  const token = req.query.token;
+  res.render("resetPassword",{token});
+});
 export default router;

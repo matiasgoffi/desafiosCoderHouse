@@ -1,5 +1,5 @@
 export default class ProductDTO {
-    constructor(title, description, price, code, status, thumbnails, stock, category) {
+    constructor(title, description, price, code, status, thumbnails, stock, category, owner) {
       this.title = title;
       this.description = description;
       this.price = price;
@@ -8,5 +8,6 @@ export default class ProductDTO {
       this.thumbnails = thumbnails;
       this.stock = stock;
       this.category = category;
+      this.owner = owner;
     }
   }

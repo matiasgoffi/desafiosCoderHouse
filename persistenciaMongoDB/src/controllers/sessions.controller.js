@@ -1,11 +1,13 @@
 import userModel from "../Dao/models/User.model.js";
 import CartManager from "../Dao/Managers/cartManager/cartManager.js";
 import UserManager from "../Dao/Managers/userManager/userManager.js";
-import { createHash, validatePassword } from "../utils.js";
+import { createHash, validatePassword, verifyEmailToken, generateEmailToken } from "../utils.js";
 import { cartsModel } from "../Dao/models/carts.js";
+import { sendRecoveryPass } from "../config/gmail.js";
 
 const cartManager = new CartManager(); // Crea una instancia de CartManager
 const usermanager = new UserManager();
+export let currentUser;
 
 export default class SessionController {
     register=async(req, res)=>{
@@ -24,18 +26,20 @@ export default class SessionController {
     login=async(req,res)=>{
         const { email, password } = req.body;
         const user = await userModel.findOne({ email });
+        currentUser = user;
+        console.log("user",user)
         if (!user) {
           return res
             .status(400)
             .send({ status: "error", error: "Datos incorrectos" });
         }
         const isValidPassword = validatePassword(password, user);
-    
-        if (!isValidPassword)
+        console.log("es una contraseña valida", isValidPassword)
+        if (!isValidPassword) {
           return res
             .status(400)
-            .send({ status: "error", error: "Datos incorrectos" }); 
-    
+            .send({ status: "error", error: "Datos incorrectos" });
+        } 
         //genero un carrito durante el logueo para asignarlo a la sesion/usuario
         const cart = await cartManager.createCart(); // Crea un nuevo carrito
         user.cart = cart.id; // Asigna el ID del carrito al campo 'cart' del usuario
@@ -55,9 +59,9 @@ export default class SessionController {
           message: "Successful login",
         });
     }
-    failLogin=async(req,res)=>{
+   failLogin=async(req,res)=>{
       req.logger.error("falló en el ingreso")
-        res.status(400).json({ status: "error", error: "error en el ingreso" });
+      res.redirect("/failLogin"); 
     }
 
     logout=async(req, res)=>{
@@ -100,6 +104,52 @@ export default class SessionController {
         res.status(400).json({ status: "error", error: "No hay usuario actual" });
       }
     };
+
+   forgotPassword=async (req,res)=>{
+      try {
+          const { email } = req.body;
+          console.log(email)
+          //verifico si existe
+          const user = await userModel.findOne({email:email})
+          if(!user){
+              return res.send(`<div>Error, <a href="/forgot-password">Intente de nuevo</a></div>`)
+          }
+          const token = generateEmailToken(email,3*60);
+          await sendRecoveryPass(email,token);
+          res.send("Se envio un correo a su cuenta para restablecer la contraseña, volver  <a href='/login'>al login</a>")
+      } catch (error) {
+          return res.send(`<div>Error, <a href="/forgot-password">Intente de nuevo</a></div>`)
+    
+      }
+    };
+  
+  resetPassword=async (req,res)=>{
+    try {
+           const token = req.query.token;
+           const {email,newPassword}=req.body;
+           //validamos el token
+           const validEmail = verifyEmailToken(token) 
+           if(!validEmail){
+            return res.send(`El enlace ya no es valido, genere uno nuevo: <a href="/forgot-password">Nuevo enlace</a>.`)
+           }
+           const user = await userModel.findOne({email:email});
+           if(!user){
+            return res.send("El usuario no esta registrado.")
+           }
+           if(validatePassword(newPassword,user)){
+            return res.send("No puedes usar la misma contraseña.")
+           }
+           const userData = {
+            ...user._doc,
+            password:createHash(newPassword)
+           };
+           const userUpdate = await userModel.findOneAndUpdate({email:email},userData);
+           res.render("login",{message:"contraseña actualizada"})
+  
+    } catch (error) {
+        res.send(error.message)
+    }
+  };
    
 }
 

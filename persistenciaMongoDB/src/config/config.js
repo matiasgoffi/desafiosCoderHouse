@@ -8,7 +8,7 @@ const program = new Command();
 
 program
 .option("-mode <modo>", "modo de inicio", "dev")
-program.parse();
+program.parse(); //se cierra la configuracion
 
 const enviroment = program.opts();
 console.log(enviroment);

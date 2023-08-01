@@ -7,11 +7,13 @@ import  CustomError  from "../services/customError.services.js";
 import EError  from "../enums/Error.js";
 import { generateProductErrorInfo } from "../services/productErrorInfo.js";
 import { generateProductErrorParamsInfo } from "../services/productErrorParams.js";
+import { currentUser } from "./sessions.controller.js";
 import {errorHandler} from "../middlewares/errorHandler.js";
 
 const productManager = new ProductManager();
 const managerAccess = new ManagerAccess();
 const sessioncontroller = new SessionController()
+
 export default class ProductsController{
     getProductsFromPage= async (req, res)=>{
         const Limit = req.params.limit;
@@ -97,6 +99,14 @@ getProductById = async(req, res, next) => {
 createProduct = async (req, res, next) => {
   await managerAccess.crearRegistro("alta de producto");
 
+  let owner;
+  if (currentUser.role === "premium" ){
+    owner =  currentUser._id;
+  } else { 
+    owner = "64865ebf8365e0a51a27c0c1";
+  }
+  console.log(owner)
+
   const {
     title,
     description,
@@ -106,7 +116,7 @@ createProduct = async (req, res, next) => {
     thumbnails,
     stock,
     category,
-  } = req.body;
+   } = req.body;
  
   // Crear instancia del DTO con los valores
   const productDTO = new ProductDTO(
@@ -117,7 +127,8 @@ createProduct = async (req, res, next) => {
     status,
     thumbnails,
     stock,
-    category
+    category,
+    owner
   );
 
   try {

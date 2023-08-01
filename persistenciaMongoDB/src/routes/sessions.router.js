@@ -18,10 +18,10 @@ router.get("/failregister", sessioncontroller.failRegister);
 
 
 //LOGIN
-router.post("/", passport.authenticate("login", { failureRedirect: "/api/session/faillogin" }),sessioncontroller.login)
+router.post("/", passport.authenticate("login", { failureRedirect: "/api/session/failLogin", failureFlash: true }),sessioncontroller.login)
 
 //FAIL LOGIN
-router.get("/faillogin", sessioncontroller.failLogin)
+router.get("/failLogin", sessioncontroller.failLogin)
 
 //LOGOUT
 router.get("/logout", sessioncontroller.logout);
@@ -36,6 +36,12 @@ router.get("/githubcallback",passport.authenticate("github", { failureRedirect: 
 
 //CURRENT SESSION
 router.get("/current", sessioncontroller.getCurrentSession);
+
+//FORGOT Y 
+router.post("/forgot-password", sessioncontroller.forgotPassword);
+
+//reset passwor
+router.post("/reset-password", sessioncontroller.resetPassword);
 
 
 export default router;

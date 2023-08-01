@@ -16,13 +16,25 @@
      color: white;
       }
     .send-button{
-     margin-top: 2%;
-     width: 10%;
-      border-radius: 40px;
-    background-color: rgb(78, 78, 183);
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
+        margin-top: 2%;
+        width: 10%;
+        border-radius: 40px;
+        background-color: rgb(78, 78, 183);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .button-reestablecer{
+        margin-top: 2%;
+        width: 15%;
+        border-radius: 40px;
+     background-color: rgb(91, 169, 96);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 1rem;
+        position: relative;
+        left: 42.5%;
     }
     .text-register{
     color: white;
@@ -34,11 +46,19 @@
     .send-button{
             width: 20%;
         }
+     .button-reestablecer{
+          width: 60%;
+          left: 20%
+    }
     }
     @media screen  and (max-width: 380px) {
     .send-button{
             width: 35%;
         }
+    .button-reestablecer{
+          width: 70%;
+          left: 15%
+    }
     }
 </style>
 
@@ -55,6 +75,9 @@
         <p class="text-register">No estás resgistrado? <a class="link-register" href="/register">Regístrate aquí</a></p>
           <p>No estás resgistrado? <a class="link-register" href="/api/session/github">Entrar con GitHub</a></p>
     </form>
+    <a href="/forgot-password">
+    <button class="button-reestablecer">Restablecer constraseña</button>
+    </a>
   
 </div>
 <script type="module" src="/js/login.js"></script>

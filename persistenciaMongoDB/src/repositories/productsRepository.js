@@ -13,10 +13,12 @@ export default class ProductRepository {
           thumbnails: productDTO.thumbnails,
           stock: productDTO.stock,
           category: productDTO.category,
+          owner:productDTO.owner
         });
-      
+        
         try {
           const nuevoProducto = await producto.save();
+          console.log(nuevoProducto)
           return nuevoProducto;
         } catch (error) {
           console.log("cannot add product with mongoose: " + error);

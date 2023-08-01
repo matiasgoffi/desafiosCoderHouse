@@ -17,6 +17,7 @@ import initializePassport from './config/passport.config.js';
 import { config } from "./config/config.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { addLogger } from "./utils/logger.js";
+import { usersRouter } from "./routes/users.router.js";
 
 
 const PORT = config.server.port;
@@ -57,6 +58,7 @@ app.use("/", loggerRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
+app.use("/api/users", usersRouter);
 app.use(errorHandler)
 
 

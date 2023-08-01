@@ -1,5 +1,6 @@
 import {fileURLToPath} from 'url';
 import { dirname } from 'path';
+import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'; 
 import { Faker, en } from '@faker-js/faker';
 
@@ -30,6 +31,21 @@ export const generateProduct = () => {
 
 export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 export const validatePassword = (password, user) => bcrypt.compareSync(password, user.password);
+
+//funciones para recuperar/generar nueva contraseña
+export const generateEmailToken = (email, expireTime)=>{
+    const token = jwt.sign({email},"goffimatias@gmail.com", {expiresIn:expireTime})
+    return token
+}
+export const verifyEmailToken = (token) =>{
+    try {
+        const info = jwt.verify(token,"goffimatias@gmail.com");
+        return info.email;
+    } catch (error) {
+        console.log(error.message)
+        return null
+    }
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

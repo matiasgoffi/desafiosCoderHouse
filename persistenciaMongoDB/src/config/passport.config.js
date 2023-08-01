@@ -48,8 +48,38 @@ const initializePassport = () => {
   passport.use(
     "login",
     new LocalStrategy(
-      { usernameField: "email" },
-      async (username, password, done) => {
+      { passReqToCallback: true, usernameField: "email" },
+      async (req, username, password, done) => {
+        try {
+          const user = await userService.findOne({ email: username });
+          if(user){
+          currentRole = user.role;
+          currentEmail = user.email;
+          }
+          if (!user) {
+            req.logger.error("El usuario no existe");
+            return done(null, false);
+          }
+          
+          // Aquí deberías verificar la contraseña utilizando la función validatePassword
+          if (!validatePassword(password, user)) {
+            req.logger.error("Contraseña incorrecta");
+            return done(null, false);
+          }
+  
+          return done(null, user);
+        } catch (error) {
+          return done("Error al intentar ingresar: " + error);
+        }
+      }
+    )
+  );
+
+/*   passport.use(
+    "login",
+    new LocalStrategy(
+      { passReqToCallback: true, usernameField: "email" },
+      async (req, username, password, done) => {
         try {
           const user = await userService.findOne({ email: username });
           currentRole = user.role;
@@ -65,7 +95,7 @@ const initializePassport = () => {
         }
       }
     )
-  );
+  ); */
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });

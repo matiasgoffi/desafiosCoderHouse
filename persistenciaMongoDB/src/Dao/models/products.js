@@ -37,6 +37,11 @@ const productsSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  owner:{
+    type:mongoose.Schema.Types.ObjectId,
+   // default: "64865ebf8365e0a51a27c0c1",
+    ref:"User"
+}
   
 });
 
