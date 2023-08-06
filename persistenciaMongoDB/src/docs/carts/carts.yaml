@@ -1,0 +1,293 @@
+paths:
+  /api/carts:
+    post:
+     summary: crear carrito
+     tags: 
+      - Carritos
+     responses:
+      "200":
+        description: carrito creado con éxito
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#components/schemas/Carrito"
+      "401":
+        description: Error por falta de permisos
+      "500":
+        description: Error del Servidor
+  /api/carts/{cid}:
+    get:
+     summary: Obtener carrito
+     tags: 
+      - Carritos
+     parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: number 
+     responses:
+      "200":
+        description: carrito obtenido con éxito
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#components/schemas/Carrito"
+      "401":
+        description: Error por falta de permisos
+      "500":
+        description: Error del Servidor
+    put:
+      summary: actualizar carrito con productos
+      tags: 
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito a actualizar
+          schema:
+            $type: objectId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: "#components/requestBodies/updateCart"
+      responses:
+        "200":
+          description: carrito actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    $ref: "#components/schemas/Carrito"
+        "500":
+          description: Error interno del servidor
+    delete:
+      summary: eliminar todos los productos del carrito
+      tags: 
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito del cual queremos eliminar los productos
+          schema:
+            $type: objectId
+      responses:
+        "200":
+          description: productos eliminados del carrito correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    $ref: "#components/schemas/Carrito"
+        "500":
+          description: Error interno del servidor   
+  /api/carts/{cid}/products/{pid}:
+    post:
+     summary: agregar producto al carrito
+     tags: 
+      - Carritos
+     parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: number
+      - name: pid
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: number  
+     responses:
+      "200":
+        description: producto agregado al carrito con éxito
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#components/schemas/Carrito"
+      "401":
+        description: Error por falta de permisos
+      "500":
+        description: Error del Servidor
+  /api/carts/{cid}/product/{pid}:
+    delete:
+     summary: eliminar producto del carrito
+     tags: 
+      - Carritos
+     parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: number
+      - name: pid
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: number  
+     responses:
+      "200":
+        description: producto eliminado del carrito con éxito
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#components/schemas/Carrito"
+      "401":
+        description: Error por falta de permisos
+      "500":
+        description: Error del Servidor
+    put:
+      summary: actualizar cantidad del producto en el carrito
+      tags: 
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito a actualizar
+          schema:
+            $type: number
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+          $type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: "#components/requestBodies/updateProductFromCart"
+      responses:
+        "200":
+          description: cantidad del procuto actualizada correctamente 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    $ref: "#components/schemas/Carrito"
+        "500":
+          description: Error interno del servidor
+  /api/carts/{cid}/purchase:
+    post:
+     summary: crear ticket de compra
+     tags: 
+      - Carritos
+     parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: number 
+     responses:
+      "200":
+        description: compra procesada con éxito
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: "#components/schemas/TicketDeCompra"
+      "401":
+        description: Error por falta de permisos
+      "500":
+        description: Error del Servidor
+
+components:
+  schemas:
+    Carrito:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto (Referencia al modelo de productos)
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+    TicketDeCompra:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código del ticket (debe ser único)
+        purchase_datetime:
+          type: string
+          format: date-time
+          description: Fecha y hora de compra del ticket
+        amount:
+          type: number
+          description: Monto total de la compra
+        purchaser:
+          type: string
+          description: Nombre del comprador
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto (Referencia al modelo de productos)
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+  requestBodies:
+    updateCart: 
+      type: object
+      properties:
+        product:
+          type: string
+          description: ID del producto (Referencia al modelo de productos)
+        quantity:
+          type: number
+          description: Cantidad del producto en el carrito
+      example:
+        products:
+          - product: "ID_DEL_PRODUCTO_1"
+            quantity: 2
+          - product: "ID_DEL_PRODUCTO_2"
+            quantity: 1
+    updateProductFromCart: 
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: cantidad con la que quiero actualizar el producto
+      example:
+        quantity: 7
+          
