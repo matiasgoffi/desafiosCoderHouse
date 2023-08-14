@@ -18,7 +18,7 @@ router.get("/:pid", productscontroller.getProductById);
 
 
 // ruta POST products with mongoose
-router.post("/",accessMiddleware("admin", "premium"), productscontroller.createProduct);
+router.post("/",  accessMiddleware("admin", "premium"), productscontroller.createProduct);
 
 
 //ruta PUT actualizar producto with mongoose

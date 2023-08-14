@@ -20,10 +20,6 @@ export default class ProductManager {
 
   //metodo buscar producto por id.
   async getProductsById(id) {
- /*    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("ID de producto inválido");
-    } */
-
     const product = await productRepository.getProductById(id);
 
     if (product) {

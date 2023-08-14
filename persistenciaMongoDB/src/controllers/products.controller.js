@@ -150,16 +150,13 @@ createProduct = async (req, res, next) => {
           message: "Error al cargar el producto", 
           errorCode: EError.INVALID_JSON,
         })
-      /*  return res.status(400).json({
-        error: "Solicitud inválida falta al menos una propiedad requerida",
-      });  */
     }
     if (productDTO){
       const nuevoProducto = await productManager.addProduct(productDTO);
      // Emitir evento a todos los clientes conectados cuando se agrega un nuevo producto
       io.emit("update", nuevoProducto);
       res.send({"PRODUCTO AGREGADO": nuevoProducto });
-    } 
+     } 
   } catch (error) {
     req.logger.error("error al crear producto")
     next(error)

@@ -124,3 +124,4 @@ const conection = mongoose.connect(MONGO);
 }
 bdMongo();
 
+export {app};
