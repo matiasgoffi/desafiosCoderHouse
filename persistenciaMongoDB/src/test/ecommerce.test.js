@@ -81,6 +81,9 @@ describe('testing  del e-commerce',()=>{
                 const result = await requester.post("/api/products").send(mockProduct);
                 const {statusCode,_body} = result;
                 expect(statusCode).to.be.equal(200);
+                const productId = _body['PRODUCTO AGREGADO']._id;
+                const existProductEnBd = await productsModel.findById(productId)
+                expect((productId).toString()).to.be.equal((existProductEnBd._id).toString())
             })
             it("prueba para corroborar la eliminacion de un producto en la base de datos", async()=>{
                 const products = await requester.get("/api/products/limit");
