@@ -1,16 +1,31 @@
 import { Router } from "express";
 import passport from "passport";
 import SessionController from "../controllers/sessions.controller.js";
+import { uploaderProfile } from "../utils.js";
+
+
+
 
 const router = Router();
 const sessioncontroller = new SessionController(); // Crea una instancia de ManagerAccess
 
 
+
 //REGISTER
 router.post(
   "/register",
-  passport.authenticate("register", { failureRedirect: "/api/session/failregister" }), sessioncontroller.register, 
-
+  uploaderProfile.single("avatar"),
+  (req, res, next) => {
+    console.log("File received:", req.file);
+    console.log("Request body:", req.body); // Esto mostrará los datos del cuerpo de la solicitud
+    next();
+  },
+  passport.authenticate("register", { failureRedirect: "/api/session/failregister" }),
+  (req, res) => {
+    console.log(req.file)
+    console.log("Request processing completed."); // Esto indica que la función de manejo de solicitudes se ejecutó
+    sessioncontroller.register(req, res);
+  }
 );
 
 //FAIL REGISTER

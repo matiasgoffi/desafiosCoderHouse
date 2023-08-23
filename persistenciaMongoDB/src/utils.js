@@ -1,8 +1,10 @@
 import {fileURLToPath} from 'url';
 import { dirname } from 'path';
+import path from "path"
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt'; 
 import { Faker, en } from '@faker-js/faker';
+import multer from 'multer';
 
 //faker js 
 export const customFaker = new Faker ({
@@ -10,6 +12,10 @@ locale: [en],
 });
 
 const { database, commerce, number, datatype, image } = customFaker;
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 //PODRIA GENERAR UN ARRAY DE IMAGENES DE SER NECESARIO PARA CUMPLIR CON THUMBNAILS = [STRING]
 
@@ -47,7 +53,57 @@ export const verifyEmailToken = (token) =>{
     }
 }
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+/*  const validFields = (body) => {
+    const {name, email, password} = body;
+    if (!name || !email || !password){
+        return false;
+    }else{
+        return true;
+    }
+}
+//validar carga imagenes multer
+ const multerFilterProfile = (req, res, file, cb)=>{
+    const isValid = validFields(req.body);
+    if (isValid){
+        cb(null, true);
+    }else{
+        cb(null, false);
+    }
+} */
+
+ const profileStorage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null,path.join(__dirname+"/multer/users/images"));
+    },
+    filename: function(req, file, cb){
+        cb(null,`${req.body.email}-perfil-${file.originalname}`)
+    }
+})
+//uploader de multer
+export const uploaderProfile = multer({storage:profileStorage})
+
+ const documentStorage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null,path.join(__dirname+"/multer/users/documents"));
+    },
+    filename: function (req, file, cb){
+        cb(null,`${req.body.email}-document-${file.originalname}`)
+    }
+})
+//uploader de documentos
+export const uploaderDocument = multer({storage: documentStorage});
+
+//configuracion para guardar imagenes de productos
+const productStorage =  multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null,path.join(__dirname+"/multer/products/images"));
+    },
+    filename: function (req, file, cb){
+        cb(null,`${req.body.code}-image-${file.originalname}`)
+    }
+})
+//uploader de imagenes
+export const uploaderProduct = multer({storage: productStorage});
+
 
 export default __dirname;

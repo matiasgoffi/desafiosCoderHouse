@@ -10,7 +10,7 @@ const usermanager = new UserManager();
 export let currentUser;
 
 export default class SessionController {
-    register=async(req, res)=>{
+    register=async(req, res, next)=>{
         if (req.user === false) {
             // La autenticación falló, el usuario ya existe
             return res.status(400).json({ status: "error", error: "User already exists" });

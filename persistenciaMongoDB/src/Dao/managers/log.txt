@@ -1203,4 +1203,6 @@ Fecha: 14/8/2023 - Hora: 18:56:44 - Metodo: eliminar producto'
 Fecha: 14/8/2023 - Hora: 18:56:44 - Metodo: POST /carritos'
 Fecha: 14/8/2023 - Hora: 18:56:45 - Metodo: POST / agrego producto al carrito'
 Fecha: 14/8/2023 - Hora: 18:56:46 - Metodo: POST / agrego producto al carrito'
-Fecha: 14/8/2023 - Hora: 18:56:46 - Metodo: PUT /carritos
+Fecha: 14/8/2023 - Hora: 18:56:46 - Metodo: PUT /carritos'
+Fecha: 21/8/2023 - Hora: 14:36:06 - Metodo: consultar todos los productos'
+Fecha: 23/8/2023 - Hora: 19:05:25 - Metodo: consultar todos los productos

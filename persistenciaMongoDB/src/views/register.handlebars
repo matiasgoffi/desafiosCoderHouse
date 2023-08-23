@@ -44,7 +44,7 @@
 
 <div>
         <h1 class="title">Registro</h1>
-        <form class="form" id="registerForm">
+        <form class="form" id="registerForm" method="post" enctype="multipart/form-data">
             <label class="label">Nombre</label>
             <input class="input"name="first_name">
             <label class="label">Apellido</label>
@@ -57,6 +57,8 @@
             <input class="input"name="age">
             <label class="label">Contraseña</label>
             <input class="input"type="password" name="password">
+            <label class="label">Subir imagen de perfil</label>
+            <input type="file" name="avatar">
             <input class="send-button" type="submit" value="Registrarme">
              <p class="text-register">¿Ya tienes una cuenta? <a class="link-register" href="/">Ingrese aquí</a></p>
         </form>

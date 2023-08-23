@@ -5,16 +5,19 @@ import GitHubStrategy from "passport-github2";
 import { createHash, validatePassword } from "../utils.js";
 import { config } from "./config.js";
 
+
 const LocalStrategy = local.Strategy;
 export let currentRole;
 export let currentEmail;
+
 const initializePassport = () => {
+
   passport.use(
     "register",
     new LocalStrategy(
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
-        const { first_name, last_name, email, age } = req.body;
+        const { first_name, last_name, email, age, } = req.body;
         try {
           const user = await userService.findOne({ email: username });
           if (user) {
@@ -75,27 +78,6 @@ const initializePassport = () => {
     )
   );
 
-/*   passport.use(
-    "login",
-    new LocalStrategy(
-      { passReqToCallback: true, usernameField: "email" },
-      async (req, username, password, done) => {
-        try {
-          const user = await userService.findOne({ email: username });
-          currentRole = user.role;
-          currentEmail = user.email;
-          if (!user) {
-            req.logger.error("el usuario no existe")
-            return done(null, false);
-          }
-          if (!validatePassword(password, user)) return done(null, false);
-          return done(null, user);
-        } catch (error) {
-          return done("Error al intentar ingresar: " + error);
-        }
-      }
-    )
-  ); */
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
@@ -103,6 +85,7 @@ const initializePassport = () => {
     const user = await userService.findById(id);
     done(null, user);
   });
+
 
   passport.use(
     "github",
