@@ -55,4 +55,5 @@ Fecha: 17/9/2023 - Hora: 14:14:36 - Metodo: consultar todos los productos'
 Fecha: 17/9/2023 - Hora: 14:15:52 - Metodo: consultar todos los productos'
 Fecha: 17/9/2023 - Hora: 15:18:37 - Metodo: consultar todos los productos'
 Fecha: 17/9/2023 - Hora: 15:18:47 - Metodo: consultar todos los productos'
-Fecha: 17/9/2023 - Hora: 15:19:25 - Metodo: consultar todos los productos
+Fecha: 17/9/2023 - Hora: 15:19:25 - Metodo: consultar todos los productos'
+Fecha: 17/9/2023 - Hora: 15:50:08 - Metodo: consultar todos los productos

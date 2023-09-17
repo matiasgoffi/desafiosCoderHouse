@@ -18,7 +18,7 @@ const pathEnviroment = enviroment.Mode === "prod" ? path.join(__dirname, "./.env
 dotenv.config({path: pathEnviroment});
 
 
-const PORT=process.env.PORT;
+const PORT=process.env.PORT||8080;
 const MONGO_URL=process.env.MONGO_URL;
 const CORREO_ADMIN=process.env.CORREO_ADMIN;
 const PASSWORD_ADMIN=process.env.PASSWORD_ADMIN;
