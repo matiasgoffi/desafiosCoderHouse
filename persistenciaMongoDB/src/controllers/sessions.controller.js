@@ -91,6 +91,7 @@ export default class SessionController {
 
     githubCallback=async(req,res)=>{
         req.session.user = req.user;
+        console.log(req.session.user)
         res.redirect("/products");
     }
 
