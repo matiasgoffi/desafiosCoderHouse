@@ -13,7 +13,7 @@ router.get("/:cid", cartscontroller.getCartForId)
 
 
 // Ruta POST :cid/product/:pid add product by cart id with mongoose
-router.post("/:cid/products/:pid", accessMiddleware("user"), cartscontroller.addProductToCart);
+router.post("/:cid/products/:pid", accessMiddleware(["user"]), cartscontroller.addProductToCart);
 
 
 // Ruta DELETE :cid/product/:pid delete product by cart id with mongoose

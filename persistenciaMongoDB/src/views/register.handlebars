@@ -41,9 +41,13 @@
         }
     }
 </style>
+<script>
+
+</script>
 
 <div>
         <h1 class="title">Registro</h1>
+        <div id="alertMessage" style="display: none; text-align:center"></div>
         <form class="form" id="registerForm" method="post" enctype="multipart/form-data">
             <label class="label">Nombre</label>
             <input class="input"name="first_name">
@@ -57,7 +61,7 @@
             <input class="input"name="age">
             <label class="label">Contraseña</label>
             <input class="input"type="password" name="password">
-            <label class="label">Subir imagen de perfil</label>
+            <label class="label" style="padding-top: 1rem;">Subir imagen de perfil</label>
             <input type="file" name="avatar">
             <input class="send-button" type="submit" value="Registrarme">
              <p class="text-register">¿Ya tienes una cuenta? <a class="link-register" href="/">Ingrese aquí</a></p>
@@ -65,3 +69,5 @@
       
 </div>
 <script src="/js/register.js"></script>
+
+

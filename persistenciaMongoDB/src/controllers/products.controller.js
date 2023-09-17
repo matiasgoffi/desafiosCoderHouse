@@ -8,7 +8,8 @@ import EError  from "../enums/Error.js";
 import { generateProductErrorInfo } from "../services/productErrorInfo.js";
 import { generateProductErrorParamsInfo } from "../services/productErrorParams.js";
 import { currentUser } from "./sessions.controller.js";
-import {errorHandler} from "../middlewares/errorHandler.js";
+import { transport } from "../config/gmail.js";
+import userModel from "../Dao/models/User.model.js";
 
 const productManager = new ProductManager();
 const managerAccess = new ManagerAccess();
@@ -103,7 +104,7 @@ createProduct = async (req, res, next) => {
   if (currentUser.role === "premium" ){
     owner =  currentUser._id;
   } else { 
-    owner = "64865ebf8365e0a51a27c0c1";
+    owner = "64fe84d9bf04116afd5cf57a" /*"64865ebf8365e0a51a27c0c1" */;
   }
   console.log(owner)
 
@@ -271,8 +272,32 @@ deleteProduct= async(req,res)=>{
     await managerAccess.crearRegistro("eliminar producto");
 
     const id = req.params.pid;
+    console.log(req.params);
   
     try {
+      const producto = await productManager.getProductsById(id);
+      console.log("producto", producto);
+      const productOwner = producto.owner;
+      console.log("product owner", productOwner);
+      const userOwner = await userModel.findById(productOwner);
+      console.log("user owner", userOwner.role);
+      if (userOwner.role === "premium"){
+        //ENVIAR MAIL AVISO ELIMINACION
+        let contenidoMail = await transport.sendMail({
+          from:'ecommerce Universo Calzado',
+          to:`${userOwner.email}`,
+          subject:'aviso de eliminación',
+          html:`
+          <div>
+            <h1>Eliminación de su producto</h1>
+            <br>
+            <h5>USUARIO:Estimadx ${userOwner.first_name} ${userOwner.last_name}</h5>
+            <h5>Le informamos que se ha eliminado de la plataforma el producto: ${producto.title}</h5>
+            <h5>Código del producto: ${producto.code}</h5>
+          </div>
+          `
+         })
+      }
       const productoEliminado = await productManager.deleteProduct(id);
   
       if (!productoEliminado) {

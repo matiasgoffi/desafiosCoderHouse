@@ -7,7 +7,26 @@ import { uploaderDocument } from "../utils.js";
 
 const router = Router();
 
-router.put("/premium/:uid", accessMiddleware("admin") , async(req,res)=>{
+
+router.get("/", UserController.getUsers);
+
+router.delete("/", UserController.deleteInactiveUsers);
+
+router.delete("/:uid", accessMiddleware(["admin"]), async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await userModel.deleteOne({_id: userId});
+        if (user.deletedCount === 1){
+        res.send({status:"success", message: user});
+        }
+
+    } catch (error) { 
+        console.log(error.message);
+        res.json({status: "error", message: "hubo un error al eliminar el usuario."})
+    }
+});
+
+router.put("/premium/:uid", accessMiddleware(["admin"]) , async(req,res)=>{
     try {
         const userId = req.params.uid;
         //verificar si el usuario existe en la base de datos
@@ -27,6 +46,7 @@ router.put("/premium/:uid", accessMiddleware("admin") , async(req,res)=>{
         res.json({status:"error", message:"hubo un error al cambiar el rol del usuario"})
     }
 });
+
 router.put("/:uid/documents", 
     checkAuthenticated, uploaderDocument.fields([{name: "identificacion", maxCount:1},{name: "domicilio", maxCount:1},{name: "estadoDeCuenta", maxCount:1}]), 
     UserController.updateUserDocument

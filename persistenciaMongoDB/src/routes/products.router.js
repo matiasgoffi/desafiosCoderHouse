@@ -18,14 +18,14 @@ router.get("/:pid", productscontroller.getProductById);
 
 
 // ruta POST products with mongoose
-router.post("/",  accessMiddleware("admin", "premium"), productscontroller.createProduct);
+router.post("/",  accessMiddleware(["admin", "premium"]), productscontroller.createProduct);
 
 
 //ruta PUT actualizar producto with mongoose
-router.put("/:pid", accessMiddleware("admin", "premium"), productscontroller.updateProduct);
+router.put("/:pid", accessMiddleware(["admin", "premium"]), productscontroller.updateProduct);
 
 // ruta DELETE product with mongoose
-router.delete("/:pid", accessMiddleware("admin", "premium"), productscontroller.deleteProduct);
+router.delete("/:pid", accessMiddleware(["admin", "premium"]), productscontroller.deleteProduct);
 
 
 export default router;

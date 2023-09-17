@@ -52,7 +52,6 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 
-
 app.use("/", viewRouter);
 app.use("/", mockingRouter);
 app.use("/", loggerRouter);
@@ -60,6 +59,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use('/api/session', sessionRouter);
 app.use("/api/users", usersRouter);
+
 //ruta para veer la documentacion de swagger
 app.use("/api/docs", swaggerUi.serve,swaggerUi.setup(swaggerspecs));
 app.use(errorHandler)

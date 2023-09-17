@@ -38,6 +38,7 @@ export const generateProduct = () => {
 export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 export const validatePassword = (password, user) => bcrypt.compareSync(password, user.password);
 
+
 //funciones para recuperar/generar nueva contraseña
 export const generateEmailToken = (email, expireTime)=>{
     const token = jwt.sign({email},"goffimatias@gmail.com", {expiresIn:expireTime})
@@ -53,23 +54,6 @@ export const verifyEmailToken = (token) =>{
     }
 }
 
-/*  const validFields = (body) => {
-    const {name, email, password} = body;
-    if (!name || !email || !password){
-        return false;
-    }else{
-        return true;
-    }
-}
-//validar carga imagenes multer
- const multerFilterProfile = (req, res, file, cb)=>{
-    const isValid = validFields(req.body);
-    if (isValid){
-        cb(null, true);
-    }else{
-        cb(null, false);
-    }
-} */
 
  const profileStorage = multer.diskStorage({
     destination: function(req, file, cb){

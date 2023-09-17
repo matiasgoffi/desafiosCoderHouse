@@ -3,6 +3,12 @@ import compression from "express-compression";
 
 const router = Router();
 
+const adminAcces = (req,res,next) =>{
+  if (req.session.user  && req.session.user.role !== "admin") {
+    return res.redirect("/products");
+  }
+  next();
+}
 const publicAcces = (req,res,next) =>{
   if (req.session.user && req.path !== "/resetPassword" && req.session.user.role !== "user") {
     return res.redirect("/products");
@@ -60,4 +66,8 @@ router.get("/reset-password",(req,res)=>{
   const token = req.query.token;
   res.render("resetPassword",{token});
 });
+router.get("/users", adminAcces,  (req, res) => {
+  res.render('users')
+});
+
 export default router;

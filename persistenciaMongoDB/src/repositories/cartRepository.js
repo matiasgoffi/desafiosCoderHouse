@@ -39,12 +39,13 @@ export default class CartRepository {
   }
 
   async updateCart(cart) {
+    console.log("productos del carrito en el repository",cart.products)
     const updatedCart = await cartsModel.findOneAndUpdate(
       { _id: cart.id },
       { products: cart.products },
       { new: true }
     );
-    console.log(updatedCart)
+    console.log("updatedCart en la class del repository",updatedCart)
     if (updatedCart) {
       return true;
     } else {

@@ -1,0 +1,60 @@
+<style>
+    hr{
+        box-shadow: 5px 5px 5px black; 
+    }
+    /* Estilo para la tabla */
+    table {
+    border-collapse: collapse; /* Colapsar los bordes de las celdas */
+    width: 100vw; /* Ancho de la tabla al 100% del contenedor */
+    margin: 20px auto; /* Centrar la tabla horizontalmente con un margen superior e inferior de 20px */
+    text-align: center; /* Centrar el contenido de las celdas */
+    background-color: white !important;
+    z-index: 100;
+    box-shadow: 5px 5px 5px white;
+    }
+
+    /* Estilo para las celdas del encabezado (th) */
+    th {
+    border: 1px solid #ccc; /* Agregar un borde de 1px sólido con color gris claro */
+    padding: 8px; /* Espaciado interno de las celdas */
+    background-color: #f2f2f2; /* Color de fondo gris claro */
+    }
+
+    /* Estilo para las celdas del cuerpo (td) */
+    td {
+    border: 1px solid #ccc; /* Agregar un borde de 1px sólido con color gris claro */
+    padding: 8px; /* Espaciado interno de las celdas */
+    }
+    .table-container{
+        height: 100vh;
+        width: 100vw;
+        background-image: url('https://images.pexels.com/photos/1341279/pexels-photo-1341279.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    }
+
+    .button-volver {
+    position: absolute;
+    right: 20px;
+    top: calc(5px + 5% + 5px);
+    width: 150px;
+    height: 5%;
+    border-radius: 40px;
+    background-color: rgb(80, 36, 122);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+    
+</style>
+<script>
+    function volver() {
+        window.location.href = '/products';
+    }
+</script>
+<h1>Gestión de Usuarios</h1>
+<button onclick="volver()" class="button-volver">VOLVER</button>
+<br><br>
+<hr>
+<div class="table-container"><div id="usersTable" class="usersTable"></div></div>
+
+
+<script type="module" src="/js/users.js"></script> 

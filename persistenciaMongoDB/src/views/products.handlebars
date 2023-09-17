@@ -1,4 +1,7 @@
  <style>
+    hr{
+        box-shadow: 5px 5px 5px black; 
+    }
   .lista-productos {
     border: 1px solid black;
     width: 96vw;
@@ -17,7 +20,7 @@
   .item-lista {
     text-align: center;
     width: 20%;
-    margin: 10px; 
+    margin: 3%; 
     padding: 0%;
     color: #f1f1f1;
     border: 1px solid #ccc;
@@ -83,7 +86,7 @@
   }
   .item-image{
     width:100%;
-    height: min-content;
+    height: 350px;
   }
   .button-logout {
     position: absolute;
@@ -99,7 +102,7 @@
   }
     .button-comprar {
     position: absolute;
-    right: 90px;
+    right: 250px;
     top: calc(5px + 5% + 5px);
     width: 150px;
     height: 5%;
@@ -112,7 +115,7 @@
    .contenedor-carrito {
     position: absolute;
     top: calc(5px + 5% + 5px);
-    right: 10px;
+    right: 165px;
     width: 40px;
     height: 5%;
     border-radius: 5px;
@@ -124,12 +127,26 @@
      padding-left: 1%;
     padding-right: 1%;
   }
+
   .number-carrito {
     color: antiquewhite;
     font-weight: 800;
     position: relative;
     bottom: 20%;
     
+  }
+
+  .button-borrar {
+    position: absolute;
+    right: 10px;
+    top: calc(5px + 5% + 5px);
+    width: 150px;
+    height: 5%;
+    border-radius: 40px;
+    background-color: rgb(185, 86, 86);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
   }
   .user-data {
     margin-top: 5%;
@@ -142,6 +159,67 @@
     padding: 1rem;
     background-color: rgba(14, 19, 52, 0.795);
   }
+  /* Estilo del modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  overflow: auto;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+/* Botón para cerrar el modal */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.button-confirmacionCompra{
+  background-color: rgba(243, 159, 14, 0.909);
+  font-weight: 800;
+  font-size: medium;
+  color: rgb(255, 252, 252);
+  position: relative;
+  width: 250px;
+  text-align: center;
+  left: 60%;
+  margin: 2rem 1rem;
+  padding: 0.5rem;
+}
+.button-confirmacionCompra:hover{
+    background-color:rgba(255, 193, 87, 0.909);
+    color: rgba(165, 106, 5, 0.909);
+    border-color: rgb(105, 207, 236);
+    font-weight: 800;
+    border-width: 2px;
+    border-radius: 5%;
+  }
+  .button-confirmacionCompra:active{
+    background-color:rgba(182, 87, 15, 0.86);
+    color: rgb(255, 252, 252);
+    box-shadow: inset 0px 0px 10px 5px rgba(1, 1, 1, 0.5);
+    font-weight: 800;
+    border: none;
+  }
+
 @media screen  and (min-width: 1400px) and (max-width: 1700px) {
     .item-button {
       width: 60%;
@@ -152,38 +230,138 @@
 }
 @media screen  and (min-width: 768px) and (max-width: 1400px) {
     .item-button {
-      width: 60%;
+      width: 70% !important;
       font-size: 0.8rem;
       position:relative;
       bottom: 60%;
     }
+   .item-lista {
+    text-align: center;
+    width: 30%;
+    margin: 10px; 
+    padding: 0%;
+    color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4%;
+    box-shadow: 2px 2px 10px rgba(232, 232, 232);
+    display: inline flow-root list-item;
+    list-style: none;
+    background-color: rgb(86, 86, 84);
+  }
+  .item-button {
+    background-color: rgba(243, 159, 14, 0.909);
+    border-radius: 40px;
+    color: rgb(255, 252, 252);
+    cursor: pointer;
+    height: 10%;
+    width: 50%;
+    position:relative;
+    bottom: 44%;
+    border: 2px solid transparent;
+    transition: border-width 0.5s, border-radius 0.5s;
+    }
 }
 @media screen and (min-width: 480px) and (max-width: 768px) {
+  .button-confirmacionCompra{
+      width: 100%;
+    
+    }
+    .contenedor-carrito {
+        top: 7%;
+        right: 15px;
+    }
+    .button-comprar {
+        top: 5px;
+        right: 45%;
+
+     }
+    .button-borrar{
+       top: 5px;
+      right: 25%;
+     }
     .item-button {
       width: 60%;
       font-size: 0.8rem;
     }
     .item-lista {
-        height: 120%;
+    text-align: center;
+    height: 120%;
+    width: 40%;
+    margin: 10px; 
+    padding: 0%;
+    color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4%;
+    box-shadow: 2px 2px 10px rgba(232, 232, 232);
+    display: inline flow-root list-item;
+    list-style: none;
+    background-color: rgb(86, 86, 84);
   }
+  .item-button {
+    background-color: rgba(243, 159, 14, 0.909);
+    border-radius: 40px;
+    color: rgb(255, 252, 252);
+    cursor: pointer;
+    height: 40px;
+    width: 70%;
+    position:relative;
+    bottom: 44%;
+    border: 2px solid transparent;
+    transition: border-width 0.5s, border-radius 0.5s;
+    }
 }
 @media screen and (min-width: 380px) and (max-width: 480px) {
+    .button-confirmacionCompra{
+        width: 100%;
+    }
+    .contenedor-carrito {
+        top: 5px;
+        right: 80%;
+        background-color:  rgba(243, 159, 14, 0.909);
+        border: 1px solid black;
+    }
+     .number-carrito {
+      color: black;
+     }
+    .button-comprar {
+        top: 5px;
+        right: 40%;
+
+     }
     .item-button {
       width: 60%;
+      height: 40px;
       font-size: 0.8rem;
     }
     .item-lista {
         height: 120%;
-        width: 40%;
+        width: 80%;
   }
   .user-data {
     margin-top: 10%;
   }
 }
 @media screen and (max-width: 380px) {
+    .button-confirmacionCompra{
+        width: 100%;
+    }
+   .contenedor-carrito {
+        top: 5px;
+        right: 80%;
+        background-color:  rgba(243, 159, 14, 0.909);
+        border: 1px solid black;
+    }
+     .number-carrito {
+      color: black;
+     }
+    .button-comprar {
+        top: 5px;
+        right: 40%;
+
+     }
     .item-button {
       width: 50%;
-      height: 25%;
+      height: 40px;
       font-size: 0.8rem;
     }
     .item-lista {
@@ -197,8 +375,9 @@
 
 </style>
 
-<a href="/api/session/logout"><button class="button-comprar">comprar</button></a>
+<button class="button-comprar">comprar</button>
 <div class="contenedor-carrito"><h5 class="number-carrito"></h5></div>
+<button class="button-borrar">vaciar carrito</button>
 <a href="/api/session/logout"><button class="button-logout">Salir</button></a>
 <div class="contenedorDatosUsuario">
   <h1 class="user-data">Bienvenido/a:  
@@ -221,16 +400,156 @@
     // Create a new heading element
     var heading = document.createElement("h3");
     heading.textContent = "Tipo de usuario: Administrador.";
-
-    // Append the heading to the document body or any other desired location
+    //Create a new anchore and button element
+    var linkUsersView = document.createElement("a");
+    var buttonUsersView = document.createElement("button");
+    buttonUsersView.textContent = "ver usuarios"
+     // Set the href attribute of the anchor element
+    linkUsersView.setAttribute("href", "/users"); // Puedes establecer la URL deseada aquí
+   // Append the button element to the anchor element
+    linkUsersView.appendChild(buttonUsersView);
+  // Append the heading to the document body or any other desired location
     document.body.appendChild(heading);
+    document.body.appendChild(linkUsersView);
   }
+
+ function mostrarSweetAlertSuccess() {
+    // Lógica para mostrar SweetAlert2
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      html: `Tu compra se ha procesado correctamente.<br>El ticket de compra se ha enviado a la casilla de email: <strong>${userEmail}<strong/>.`
+    });
+  }
+   function mostrarSweetAlertError() {
+    // Lógica para mostrar SweetAlert2
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      html: "Error al procesar la compra, si el problema persiste comuniquese con el administrador."
+    });
+  }
+
+function finalizarcompra(carrito) {
+  try {
+    // Realiza una solicitud GET a la ruta 'api/users/'
+    fetch('/api/users/')
+      .then((response) => {
+          if (!response.ok) {
+            throw new Error('La solicitud no fue exitosa');
+          }
+          return response.json(); 
+       })
+        .then((data) => {
+          let user = data.message.filter((user) => (user.email === userEmail))
+        
+          let cart = user[0].cart;
+          let id = user[0].id;
+          console.log(cart);
+          console.log(id);
+          console.log(`/api/carts/${cart}`)
+          fetch(`/api/carts/${cart}`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('La solicitud post del carrito no fue exitosa');
+                }
+                return response.json(); 
+                })
+                .then((data) => {
+                  console.log("data del carrito",data)
+                  console.log("carrito", carrito)
+                  // Array para almacenar productos con cantidades
+                  const productosConCantidades = [];
+                  for(let i=0; i < carrito.length; i++){
+                      const productoExistente = productosConCantidades.find(p => p._id === carrito[i]._id);
+                       if (productoExistente) {
+                        productoExistente.quantity++;
+                      } else {
+                        productosConCantidades.push({
+                          _id: carrito[i]._id,
+                          quantity: 1,
+                        });
+                      }
+                  }
+             
+                  let bodyPut = {
+                      "products": productosConCantidades.map(producto => ({
+                        "_id": producto._id,
+                        "quantity": producto.quantity
+                      }))
+                    };
+
+                
+                  const putConfig = {
+                    method: 'PUT', // Método PUT
+                    headers: {
+                      'Content-Type': 'application/json', // Tipo de contenido JSON
+                    },
+                    body: JSON.stringify(bodyPut), // Convierte el objeto bodyPut a JSON
+                  };
+
+                 fetch(`/api/carts/${cart}`, putConfig)
+                    .then((response) => {
+                      if (!response.ok) {
+                        throw new Error('La solicitud PUT del carrito no fue exitosa');
+                      }
+                      return response.json();
+                    })
+
+                    .then((data) => {
+                      console.log("data retornada del put", data);
+
+                      const postPurchaseConfig = {
+                          method: 'POST', 
+                          headers: {
+                            'Content-Type': 'application/json', 
+                          }
+                        }
+                        
+                        fetch(`/api/carts/${cart}/purchase`, postPurchaseConfig)
+                          .then((response) => {
+                            if (!response.ok) {
+                              throw new Error('La solicitud PUT del ticket no fue exitosac');
+                            }
+                            return response.json();
+                          })
+                        })
+                         .then((data) => {
+                              mostrarSweetAlertSuccess();
+                              const modal = document.getElementById("myModal")
+                              const buyTable = document.getElementById("buyTable");
+                              modal.style.display = "none";
+                              buyTable.innerHTML="";
+                              console.log("data retornada del put ticket purchase", data);
+                            })
+                          .catch((error) => {
+                            mostrarSweetAlertError();
+                            console.error('Error en la solicitud ticket purchase:', error);
+                          });
+                    })
+                    .catch((error) => {
+                      mostrarSweetAlertError();
+                      console.error('Error en la solicitud PUT actualizar carrito:', error);
+                    });
+                                  
+                })
+          .catch((error) => {
+            mostrarSweetAlertError();
+              console.error('Error en la solicitud PUT actualizar carrito:', error);
+         });
+        //try catch
+      } catch (error) {
+        mostrarSweetAlertError()
+     console.error('Error en la función finalizarcompra:', error);
+    }
+  }
+
 </script>
 
 
 
-
-<h2>Nuestros productos</h2>
+<hr>
+<h2 style="text-decoration: underline;">Nuestros productos</h2>
 
 
 <div class="container-pagination"id="pagination">
@@ -241,10 +560,21 @@
 
 <div class="lista-productos" id="lista-productos"></div>
 
+{{!-- MODAL --}}
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 style="text-align: center; padding-bottom: 1rem; text-decoration:underline;">Resumen de Compra</h2>
+    <!-- Aquí puedes mostrar el resumen de la compra -->
+    <div id="buyTable"></div>
+  </div>
+</div>
 
 <script type="module" src="/js/products.js"></script> 
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.all.min.js"></script>
 
 
 

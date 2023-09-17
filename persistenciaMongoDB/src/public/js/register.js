@@ -1,4 +1,5 @@
 const form = document.getElementById('registerForm');
+const alertMessage = document.getElementById("alertMessage");
 
 
 form.addEventListener('submit', async (e) => {
@@ -12,29 +13,26 @@ form.addEventListener('submit', async (e) => {
         });
         
         if (response.ok) {
+            alertMessage.textContent = "Usuario registrado con éxito.";
+            alertMessage.style.color = "green";
+            alertMessage.style.display = "block";
+            setTimeout(() => {
+                alertMessage.style.display = "none";
+                window.location.href = "/"; 
+            }, 3000);
             console.log('Registro exitoso');
+            
         } else {
+            alertMessage.textContent = "Error en el registro";
+            alertMessage.style.color = "red";
+            alertMessage.style.display = "block";
+            setTimeout(() => {
+                alertMessage.style.display = "none";
+            }, 3000);
             console.log('Error en el registro');
         }
     } catch (error) {
         console.log(error);
     }
 });
-/* form.addEventListener('submit', e=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    const obj = {};
-    data.forEach((value,key)=>obj[key]=value);
-    try {
-        fetch('/api/session/register',{
-            method:'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}) */
 

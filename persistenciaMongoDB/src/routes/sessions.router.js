@@ -26,6 +26,7 @@ router.post(
     console.log("Request processing completed."); // Esto indica que la función de manejo de solicitudes se ejecutó
     sessioncontroller.register(req, res);
   }
+  
 );
 
 //FAIL REGISTER

@@ -3,20 +3,26 @@ import CartManager from "../Dao/Managers/cartManager/cartManager.js";
 import UserManager from "../Dao/Managers/userManager/userManager.js";
 import { createHash, validatePassword, verifyEmailToken, generateEmailToken } from "../utils.js";
 import { cartsModel } from "../Dao/models/carts.js";
+import userService from "../Dao/models/User.model.js";
 import { sendRecoveryPass } from "../config/gmail.js";
+
+
 
 const cartManager = new CartManager(); // Crea una instancia de CartManager
 const usermanager = new UserManager();
 export let currentUser;
+
+
 
 export default class SessionController {
     register=async(req, res, next)=>{
         if (req.user === false) {
             // La autenticación falló, el usuario ya existe
             return res.status(400).json({ status: "error", error: "User already exists" });
-          }else {
+          }else {  
             req.logger.info("usuario registrado")
             res.status(200).json({ status: "success", message: "User registered" });
+              // Mostrar SweetAlert después de un retraso
         }
     }
     failRegister=async(req,res)=>{
@@ -68,6 +74,11 @@ export default class SessionController {
         // Obtén el ID del carrito asociado al usuario
         const cartId = req.session.user.cart;
         cartManager.deleteCart(cartId)
+        const user = await userService.findOne({ email: req.session.user.email });
+        if(user){
+        user.last_connection = new Date(); 
+        await user.save(); 
+        }
         req.session.destroy((err) => {
             if (err)
               return res
@@ -150,6 +161,7 @@ export default class SessionController {
         res.send(error.message)
     }
   };
+ 
    
 }
 

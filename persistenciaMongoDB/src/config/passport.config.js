@@ -10,6 +10,8 @@ const LocalStrategy = local.Strategy;
 export let currentRole;
 export let currentEmail;
 
+
+
 const initializePassport = () => {
 
   passport.use(
@@ -58,6 +60,8 @@ const initializePassport = () => {
           if(user){
           currentRole = user.role;
           currentEmail = user.email;
+          user.last_connection = new Date(); 
+          await user.save(); 
           }
           if (!user) {
             req.logger.error("El usuario no existe");
@@ -133,3 +137,4 @@ const initializePassport = () => {
 };
 
 export default initializePassport;
+

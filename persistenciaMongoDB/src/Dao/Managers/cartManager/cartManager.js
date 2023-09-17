@@ -46,8 +46,10 @@ export default class CartManager {
 
 
   async updateCart(cart) {
+    console.log("el carrito que llega a updateCart en la class manager",cart)
     const updated = await cartRepository.updateCart(cart);
     return updated;
+    
   }
 
 

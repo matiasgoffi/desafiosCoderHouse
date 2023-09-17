@@ -170,7 +170,6 @@ export default class CartsController {
 
       // Actualizar el arreglo de productos del carrito
       cart.products = products;
-
       // Actualizar el carrito en la base de datos
       const updatedCart = await cartManager.updateCart(cart);
 
@@ -297,7 +296,7 @@ export default class CartsController {
       //ENVIAR TICKET AL MAIL
         let contenidoMail = await transport.sendMail({
           from:'ecommerce Universo Calzado',
-          to:'goffimatias@gmail.com',
+          to:`${newTicket.purchaser}`,
           subject:'ticket de compra',
           html:`
           <div>
@@ -306,6 +305,7 @@ export default class CartsController {
             <h5>USUARIO: ${newTicket.purchaser}</h5>
             <h5>CODIGO DE COMPRA: ${newTicket.code}</h5>
             <h5>MONTO FINAL: $${newTicket.amount}</h5>
+            <h4>!Gracias por elegirnos!</h4>
           </div>
           `
          })
@@ -320,3 +320,4 @@ export default class CartsController {
   }
 
 }
+

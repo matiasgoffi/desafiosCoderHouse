@@ -1,9 +1,11 @@
 import { currentRole } from "../config/passport.config.js";
 
-const accessMiddleware = (...allowedRoles) => (req, res, next) => {
+const accessMiddleware = ([...allowedRoles]) => (req, res, next) => {
   try {
     req.logger.info(currentRole)
-    if (allowedRoles.includes(currentRole)) {
+    console.log(allowedRoles[0])
+    console.log(currentRole)
+    if (allowedRoles[0] === currentRole || allowedRoles[1] === currentRole) {
       next();
     } else {
       // Si el rol no coincide, puedes enviar una respuesta de error
