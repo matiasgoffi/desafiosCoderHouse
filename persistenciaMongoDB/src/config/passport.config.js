@@ -91,13 +91,10 @@ const initializePassport = () => {
   });
 
 
-  passport.use(
-    "github",
-    new GitHubStrategy(
-      {
-        clientID: config.github.clientId,
-        clientSecret: config.github.clientSecret,
-        callbackURL: config.github.callbackURL,
+  passport.use("github", new GitHubStrategy({
+        clientID:config.github.clientId,
+        clientSecret:config.github.clientSecret,
+        callbackURL:config.github.callbackURL,
       },
       async (accesToken, refreshToken, profile, done) => {
         try {
