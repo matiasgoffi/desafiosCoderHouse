@@ -97,8 +97,7 @@ const initializePassport = () => {
       {
         clientID: config.github.clientId,
         clientSecret: config.github.clientSecret,
-        callbackURL:"https://desafioscoderhouse-production.up.railway.app/api/session/githubcallback"
-        //callbackURL: "http://localhost:8080/api/session/githubcallback",
+        callbackURL: config.github.callbackURL,
       },
       async (accesToken, refreshToken, profile, done) => {
         try {

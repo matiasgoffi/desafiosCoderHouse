@@ -25,6 +25,7 @@ const PASSWORD_ADMIN=process.env.PASSWORD_ADMIN;
 const SECRET=process.env.SECRET;
 const CLIENTIDGITHUB=process.env.CLIENTIDGITHUB;
 const CLIENTSECRETGITHUB=process.env.CLIENTSECRETGITHUB
+const CALLBACKURL=process.env.CALLBACKURL
 
 export const config = {
     server: {
@@ -40,6 +41,8 @@ export const config = {
     },
     github: {
         clientSecret: CLIENTSECRETGITHUB, 
-        clientId: CLIENTIDGITHUB
+        clientId: CLIENTIDGITHUB,
+        callbackURL: CALLBACKURL
+
     }
 }
