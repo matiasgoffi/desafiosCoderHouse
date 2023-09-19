@@ -98,17 +98,16 @@ const initializePassport = () => {
       },
       async (accesToken, refreshToken, profile, done) => {
         try {
-          req.logger.info(profile)
-
+         
           let email = profile._json.email;
           if (!email) {
             email = profile._json.login;
           }
-
+        
           const user = await userService.findOne({
             email: email,
           });
-          currentEmail = user.email;//chequear de recibir el email de quien se loguea en github y no el nombre de usuario
+
           if (!user) {
             let newUser = {
               first_name: profile._json.name,
@@ -117,6 +116,7 @@ const initializePassport = () => {
               age: 31,
               password: "",
             };
+  
             const result = await userService.create(newUser);
             done(null, result);
           } else {
